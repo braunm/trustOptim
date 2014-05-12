@@ -1,0 +1,3 @@
+useDynLib(trustOptim)
+exportPattern("^[[:alpha:]]+")
+import(Rcpp, Matrix, RcppEigen)

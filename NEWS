@@ -1,0 +1,66 @@
+NEWS file for trustOptim package
+
+VERSION 0.8.3 (December 7, 2013)
+
+   o   For log10(x) and sqrt(x), with x being an integer, provide explicit casts
+       from int to double (strict conformance with C++, need to compile
+       on Solaris).
+
+VERSION 0.8.2 (November 4, 2013)
+
+   o   Minor changes in the demo/choice_sparse.R and demo/choice_dense.R, so the
+       algorithms start closer to the optimal values.
+
+   o   Moved vignette code to conform to new CRAN standards.
+
+   o   Updated maintainer contact information.
+
+
+VERSION 0.8.1 (June 7, 2013)
+
+   o   Rewrote update_one_step() in CG-base.h so the gradient is not evaluated if we already know that
+       the trust region will contract.  If the trust region contracts, the algorithm does not move, so
+       the gradient does not need to be recomputed. (Thanks to Gregor Reich for contributing a change to
+       the code).
+
+   o   For report_level >= 3, the precision of the output of the current radius of the trust region
+       now depends on the report_precision parameter.  Previously, the precision had an upper bound of 2.
+       (Thanks to Gregor Reich for contributing a change to the code). 
+
+   o   For the BFGS method, the default preconditioner is now the Cholesky (Hessians are guaranteed to
+       be positive definite).  For SR1 and Sparse, the default preconditioner remains the identity matrix.
+
+   o   There is a new vignette, with an added example of a smaller problem with a dense Hessian.
+       Both the sparse and dense Hessian examples can be run through demo(choice_sparse) and
+       demo(choice_dense).  The code for the examples is in the demo directory.  
+       The code for the objective functions and gradients is in R/demo_funcs.R.
+
+   o   New minimum versions for dependencies (Rcpp 0.10.3 and RcppEigen 0.3.1.2.1).
+
+VERSION 0.8.0 (Dec. 27, 2012)
+
+   o   Removed sparseFD method. Instead, use the sparseHessianFD package for similar funcationality.
+
+   o   All ACM-licensed code was removed from the package and moved to the sparseHessianFD package.
+
+   o   Disabled the diagonal preconditioner, which was segfaulting for some yet-to-be-identified
+       reason.  Since it didn't work much better than no preconditioner at all, it's no great loss. 
+       The modified Cholesky preconditioner remains.
+
+   o   In the control list, setting preconditioner to 1 implements the modified Cholesky preconditioner.
+       The value 2 is no longer a valid (and will default to the identity preconditioner).
+
+   o   Fixed a bug where the function.scale.factor option defaulted to -1 instead of 1.
+       It now defaults to 1.
+
+
+VERSION 0.7.1 (Sept. 27, 2012)
+
+   o   Added get.fdfh function to return estimate of sparse Hessian when only the structure is known.
+
+   o   Added vignette that describes how to use the package, and compares performance to some other optimizers.
+
+
+VERSION 0.7.0
+
+   o  Initial upload to CRAN.
