@@ -1,2 +1,8 @@
 *.so
 *.o
+*~
+.*~
+.DS_Store
+.Rhistory
+.RData
+
