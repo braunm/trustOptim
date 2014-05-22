@@ -9,7 +9,6 @@ N <- 250  ## number of heterogeneous units
 k <- 100   ## number of covariates
 T <- 20  ## number of "purchase opportunities per unit
 
-
 ## Simulate data and set priors
 
 x.mean <- rep(0,k)
@@ -33,28 +32,24 @@ start <- as.vector(t(rmvnorm(1,mean=start.mean,sigma=start.cov)))
 hess.struct <- Matrix.to.Coord(matrix(1,k,k))
 
 ## Setting up function to compute Hessian using sparseHessianFD package.
-obj <- new.sparse.hessian.obj(start, fn=demo.get.f.dense, gr=demo.get.grad.dense,
+obj <- new.sparse.hessian.obj(start, fn=hbc.f.dense, gr=hbc.grad.dense,
                               hs=hess.struct, Y=Y, X=X,
                               inv.Omega=inv.Omega, T=T)
 
-td <- system.time(opt <- trust.optim(start, fn=obj$fn,
-                                     gr = obj$gr,
-                                     hs = obj$hessian,
-                                     method = "BFGS",                             
-                                     control = list(
-                                       start.trust.radius=5,
-                                       stop.trust.radius = 1e-5,
-                                       prec=1e-7,
-                                       report.freq=1L,
-                                       report.level=4L,
-                                       report.precision=1L,
-                                       maxit=500L,
-                                       preconditioner=1L
-                                       ) 
-                                     )
-                  )
-
-print(td)
-
+opt <- trust.optim(start, fn=obj$fn,
+                   gr = obj$gr,
+                   hs = obj$hessian,
+                   method = "Sparse",                             
+                   control = list(
+                       start.trust.radius=5,
+                       stop.trust.radius = 1e-5,
+                       prec=1e-7,
+                       report.freq=1L,
+                       report.level=4L,
+                       report.precision=1L,
+                       maxit=500L,
+                       preconditioner=1L
+                       ) 
+                   )
 
 

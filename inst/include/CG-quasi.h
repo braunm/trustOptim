@@ -16,39 +16,33 @@
 #include <iostream>
 #include <iomanip>
 
-#include <include_eigen.hpp>
-
 using namespace Eigen;
 using namespace std;
 
 template<typename TP, typename TFunc, typename THess, typename TPreLLt>  // TP is type for the parameter vector
   class Trust_CG_Optimizer : public Trust_CG_Base<TP, TFunc, THess, TPreLLt> {
 
-  typedef typename TP::Scalar Scalar;
   typedef typename TP::Index Index;
-  
+  typedef Trust_CG_Base<TP, TFunc, THess, TPreLLt> BaseType;
 
-  typedef Matrix<Scalar, Dynamic, 1> Vec;
-  typedef Matrix<Scalar, Dynamic, Dynamic> Mat;
-
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::Bk;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::nvars;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::func;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::function_scale_factor;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::xk;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::precond_ID;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::PrecondLLt;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::status;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::yk;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::sk;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::rad;
-  using Trust_CG_Base<TP, TFunc, THess, TPreLLt>::iter;
+  using BaseType::Bk;
+  using BaseType::nvars;
+  using BaseType::func;
+  using BaseType::function_scale_factor;
+  using BaseType::xk;
+  using BaseType::precond_ID;
+  using BaseType::PrecondLLt;
+  using BaseType::status;
+  using BaseType::yk;
+  using BaseType::sk;
+  using BaseType::rad;
+  using BaseType::iter;
 
 private:
 
   const int & quasi_newton_method;
   
-  Mat Precond; // current preconditioning matrix for trust sub-problem
+  MatrixXd Precond; // current preconditioning matrix for trust sub-problem
   void init_precond();
   void init_precond_identity();
   void init_precond_Cholesky();
@@ -60,7 +54,7 @@ private:
   void updateHessian_SR1();
   void updateHessian_BFGS();
 
-  Vec work; // some workspace
+  VectorXd work; // some workspace
 
   void update_hessian();
 
@@ -276,9 +270,9 @@ void Trust_CG_Optimizer<TP, TFunc, THess, TPreLLt>::updateHessian_BFGS()
 
  // // BFGS update of Hessian for next iteration
  // using wd workspace for Bs
-  Scalar ys = yk.dot(sk);
+  double ys = yk.dot(sk);
   work = Bk.template selfadjointView<Lower>() * sk;
-  Scalar sBs = sk.dot(work);
+  double sBs = sk.dot(work);
 
 
   Bk.template selfadjointView<Lower>().rankUpdate(work,-1.0/sBs);

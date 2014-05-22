@@ -18,4 +18,6 @@
 #'
 #' @docType package
 #' @name trustOptim
+#' @import Matrix mvtnorm Rcpp RcppEigen
+#' @useDynLib trustOptim
 NULL 

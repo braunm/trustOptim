@@ -128,4 +128,20 @@ To use the sparseHessian package, you need to provide the row and column indices
 
 Of course, sparseHessianFD is useful only for the Sparse method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 }
+\examples{
+N <- 5
+start <- as.vector(rnorm(2*N,-1,3))
+res <- trust.optim(start,
+                   fn=f.rosenbrock,
+                   gr=df.rosenbrock,
+                   hs=hess.rosenbrock,
+                   method="Sparse",
+                   control=list(report.freq=1L,
+                       report.level=3L,
+                       report.precision=2L,
+                       preconditioner=2L
+                       )
+                   )
+print(res)
+}
 
