@@ -18,4 +18,5 @@ Returns a lower triangular matrix from a vector, filled columnwise.
 x must be a vector of length k(k+1)/2, where k is the number of rows (and columns)
   of the result.
 }
+\keyword{internal}
 

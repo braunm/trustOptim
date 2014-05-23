@@ -14,4 +14,5 @@ result = exp(x) / (1+exp(x))
 \description{
 Returns the inverse logit of elements in x.
 }
+\keyword{internal}
 

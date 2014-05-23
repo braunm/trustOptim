@@ -18,3 +18,4 @@ Suggests:
     mvtnorm
 LinkingTo: Rcpp, RcppEigen
 Copyright: (c) 2013 Michael Braun
+Roxygen: list(wrap=FALSE)

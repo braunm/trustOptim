@@ -20,4 +20,5 @@ Vector of elements of lower triangle of matrix, including diagonal,
 
 If M is a k x k matrix, then x is a vector of length k(k+1)/2.
 }
+\keyword{internal}
 

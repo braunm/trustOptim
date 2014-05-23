@@ -4,6 +4,7 @@
 #' @param p a scalar, vector or matrix, where all elements are between 0 and 1
 #' @return result = log(p/(1-p))
 #' @export
+#' @keywords internal
 logit <- function(p) {
 
   if (any(p<=0) || any(p>=1)) {
@@ -20,6 +21,8 @@ logit <- function(p) {
 #' @param x a scalar, vector or matrix
 #' @return result = exp(x) / (1+exp(x))
 #' @export
+#' @keywords internal
+
 inv.logit <- function(x) {
   
   w.max <- x>=log(.Machine$double.xmax)
@@ -37,6 +40,8 @@ inv.logit <- function(x) {
 #'   log(inv.logit(x)).  Should be less sensitive to overflow and underflow with
 #'   very large or very small x.
 #' @export
+#' @keywords internal
+
 log_inv.logit <- function(x) {
 
   w.max <- x>=log(.Machine$double.xmax)

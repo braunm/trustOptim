@@ -6,6 +6,7 @@
 #' @return A vector of conforming length
 #' @details If M is a k x k matrix, then x is a vector of length k(k+1)/2.
 #' @export
+#' @keywords internal
 vech <- function( M )
 {
     if ( nrow(M)!=ncol(M))
@@ -23,6 +24,7 @@ vech <- function( M )
 #'   of the result.
 #' @return A k x k lower triangular matrix.
 #' @export
+#' @keywords internal
 inv.vech <- function( x ) {
 
   n <- length(x)

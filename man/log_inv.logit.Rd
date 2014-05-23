@@ -19,4 +19,5 @@ Intended to be a numerically stable alternative to just doing
   log(inv.logit(x)).  Should be less sensitive to overflow and underflow with
   very large or very small x.
 }
+\keyword{internal}
 

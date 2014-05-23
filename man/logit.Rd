@@ -14,4 +14,5 @@ result = log(p/(1-p))
 \description{
 Returns the logit of x.
 }
+\keyword{internal}
 

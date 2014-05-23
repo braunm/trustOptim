@@ -18,16 +18,16 @@ function.scale.factor under control)}
 numeric vector that is the gradient of \code{fn} at \code{x}. The
 length of the gradient must be the same as the length of \code{x}.
 The user must supply this function.  If an analytic gradient is not
-available, and the method is SR1 or BFGS, the user should consider a
+available, and the method is \code{SR1} or \code{BFGS}, the user should consider a
 numerical approximation using finite differencing (see the
 numDeriv package).  Do not use a finite-differenced gradient with
-the Sparse method.  That will cause a world of hurt.}
+the \code{Sparse} method.  That will cause a world of hurt.}
 
 \item{hs}{An R function that takes x as its first argument.
-Returns a Hessian matrix object of class "dgCMatrix" (see the Matrix package).
-This function is called only if the selected method is "Sparse."}
+Returns a Hessian matrix object of class \code{dgCMatrix} (see the \pkg{Matrix} package).
+This function is called only if the selected method is \code{Sparse}.}
 
-\item{method}{Valid arguments are "SR1","BFGS",and "Sparse".}
+\item{method}{Valid arguments are \code{SR1},\code{BFGS},and \code{Sparse}.}
 
 \item{control}{A list containing control parameters for the optimizer.
 See details.}
@@ -41,7 +41,7 @@ List containing the following items:
   \item{solution}{Parameter vector at the optimum}
   \item{gradient}{Gradient at the optimum}
   \item{hessian}{Estimate of the Hessian at the optimum (as class
-    "symmetricMatrix", returned only for Sparse method).}
+    \code{symmetricMatrix}, returned only for \code{Sparse} method).}
   \item{iterations}{Number of iterations before stopping}
   \item{status}{A message describing the last state of the iterator}
 }
@@ -87,7 +87,7 @@ The control list should include the following parameters.
     for the conjugate gradiate estimation of the trust region
     subproblem is reestimated.  Preconditioners can help the convergence properties of the algoriothm.  Default is 1.}
 \item{preconditioner}{ID for choice of preconditoner.  0 is the
-    identity matrix (default), For the Sparse method, 1 is a modified Cholesky preconditioner. For the BFGS method, 1 is the full Cholesky decomposition.  If you select 1 for the SR1 method, the algorithm will use the identity preconditioner instead.}
+    identity matrix (default), For the \code{Sparse} method, 1 is a modified Cholesky preconditioner. For the \code{BFGS} method, 1 is the full Cholesky decomposition.  If you select 1 for the \code{SR1} method, the algorithm will use the identity preconditioner instead.}
 \item{trust.iter}{Maximum number of conjugate gradient iterations to run when solving the trust region subproblem.  A higher number will lead to more accurate solutions to the subproblem, but may also lead to longer run times. Defaults to 2000.}
 }
 }
@@ -117,16 +117,16 @@ The algorithm will stop when one of the following three conditions are met:
 \item{The number of iterations reaches the control parameter \code{maxit}}
 }
 
-If the algorithm appears to have stopped prematurely (i.e., the norm of the gradient is still too large), then one might just restart the algorithm.  For the quasi-Newton algorithms (SR1 and BFGS), this will refresh the Hessian, and might allow more progress to be made.
+If the algorithm appears to have stopped prematurely (i.e., the norm of the gradient is still too large), then one might just restart the algorithm.  For the quasi-Newton algorithms (\code{SR1} and \code{BFGS}), this will refresh the Hessian, and might allow more progress to be made.
 }
 
 \section{Estimating a sparse Hessian}{
 
-Sometimes estimating the Hessian is easy (e.g., you have an analytic representation, or you are using some kind of algorithmic differentiation software).  If you do not know the Hessian, but you do know the sparsity structure, try the sparseHessianFD package. The routines in sparseHessianFD compute the Hessian using finite differencing, but in a way that exploits the sparsity structure.  In many cases, this can be faster than constructing an analytic Hessian for a large problem (e.g., when the Hessian has a block-arrow structure with a large number of blocks).
+Sometimes estimating the Hessian is easy (e.g., you have an analytic representation, or you are using some kind of algorithmic differentiation software).  If you do not know the Hessian, but you do know the sparsity structure, try the \pkg{sparseHessianFD} package. The routines in \pkg{sparseHessianFD} compute the Hessian using finite differencing, but in a way that exploits the sparsity structure.  In many cases, this can be faster than constructing an analytic Hessian for a large problem (e.g., when the Hessian has a block-arrow structure with a large number of blocks).
 
-To use the sparseHessian package, you need to provide the row and column indices of the non-zero elements of the lower triangle of the Hessian. This structure cannot change during the course of the trust.optim routine.  Also, you really should provide an analytic gradient.  sparseHessianFD computes finite differences of the gradient, so if the gradient itself is finite-differenced, so much error is propogated through that the Hessians are nearly worthless close to the optimum.
+To use the \pkg{sparseHessianFD} package, you need to provide the row and column indices of the non-zero elements of the lower triangle of the Hessian. This structure cannot change during the course of the trust.optim routine.  Also, you really should provide an analytic gradient.  \pkg{sparseHessianFD} computes finite differences of the gradient, so if the gradient itself is finite-differenced, so much error is propogated through that the Hessians are nearly worthless close to the optimum.
 
-Of course, sparseHessianFD is useful only for the Sparse method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
+Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 }
 \examples{
 N <- 5

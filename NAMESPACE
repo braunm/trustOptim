@@ -2,8 +2,6 @@
 
 export(df.rosenbrock)
 export(f.rosenbrock)
-export(hbc.dlog.f.db)
-export(hbc.dlog.f.dmu)
 export(hbc.f)
 export(hbc.f.dense)
 export(hbc.grad)

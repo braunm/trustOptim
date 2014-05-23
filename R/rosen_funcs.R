@@ -1,6 +1,6 @@
 #' @title Multivariate Rosenbrock function, derivative, Hessian
 #'
-#' @description Demonstration function
+#' @description Objective function, gradient and hessian for demos.
 #'
 #' @param V Vector of length 2N, ordered \eqn{(x_1,y_1,x_2,y_2,\mathellipsis, x_N,y_N)}
 #'
@@ -19,7 +19,7 @@
 #' \item{hess.rosenbrock}{a symmetric matrix of class \code{dgCMatrix} (defined
 #'     in the \pkg{Matrix} package) for the Hessian of the function.}
 #' }
-
+#' @rdname rosen
 #' @export
 f.rosenbrock <- function(V) {
 
@@ -29,7 +29,7 @@ f.rosenbrock <- function(V) {
     return(sum(100*(x^2-y)^2+(x-1)^2))
 }
 
-#' @describeIn f.rosenbrock
+#' #' @rdname rosen
 #' @export
 df.rosenbrock <- function(V) {
     N <- length(V)/2
@@ -42,7 +42,7 @@ df.rosenbrock <- function(V) {
     return(as.vector(rbind(dxi,dyi)))
  }
 
-#' @describeIn f.rosenbrock
+#' @rdname rosen
 #' @export
 hess.rosenbrock <- function(V) {
 
