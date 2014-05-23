@@ -57,5 +57,5 @@ opt <- trust.optim(start, fn=obj$fn,
                        preconditioner=1L
                        ) 
                    )
-)
+
 
