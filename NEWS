@@ -1,5 +1,11 @@
 NEWS file for trustOptim package
 
+VERSION 0.8.4 (May 28, 2014)
+
+   o   Now using Roxygen2 for documentation and namespace management.
+   o   Non-CRAN version for Journal of Statistical Software.
+
+
 VERSION 0.8.3 (December 7, 2013)
 
    o   For log10(x) and sqrt(x), with x being an integer, provide explicit casts

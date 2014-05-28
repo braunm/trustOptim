@@ -19,6 +19,6 @@ Nocedal, Jorge, and Stephen J Wright. 2006. Numerical Optimization. Second editi
 
 Steihaug, Trond. 1983. The Conjugate Gradient Method and Trust
 Regions in Large Scale Optimization. SIAM Journal on Numerical
-Analysis 20 (3): 626–637.
+Analysis 20 (3): 626-637.
 }
 

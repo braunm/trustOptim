@@ -23,7 +23,7 @@
 #' @param method Valid arguments are \code{SR1},\code{BFGS},and \code{Sparse}.
 #' @param control A list containing control parameters for the optimizer.
 #'   See details.
-#' @param ... Additonal arguments passed to \code{fn}, \code{gr} and \code{hs}.
+#' @param ... Additional arguments passed to \code{fn}, \code{gr} and \code{hs}.
 #'   All arguments must be named.
 #'
 #' @return List containing the following items:
@@ -36,7 +36,8 @@
 #'   \item{status}{A message describing the last state of the iterator}
 #' 
 #' @section Details:
-#'  
+#'  The following sections explain how to use the package as a whole.
+#' 
 #' @section Control parameters:
 #' The control list should include the following parameters.
 #' \describe{
@@ -68,8 +69,8 @@
 #'     (usually -1).  Default is 1.}
 #' \item{precond.refresh.freq}{Frequency at which the preconditioner
 #'     for the conjugate gradiate estimation of the trust region
-#'     subproblem is reestimated.  Preconditioners can help the convergence properties of the algoriothm.  Default is 1.}
-#' \item{preconditioner}{ID for choice of preconditoner.  0 is the
+#'     subproblem is reestimated.  Preconditioners can help the convergence properties of the algorithm.  Default is 1.}
+#' \item{preconditioner}{ID for choice of preconditioner.  0 is the
 #'     identity matrix (default), For the \code{Sparse} method, 1 is a modified Cholesky preconditioner. For the \code{BFGS} method, 1 is the full Cholesky decomposition.  If you select 1 for the \code{SR1} method, the algorithm will use the identity preconditioner instead.}
 #' \item{trust.iter}{Maximum number of conjugate gradient iterations to run when solving the trust region subproblem.  A higher number will lead to more accurate solutions to the subproblem, but may also lead to longer run times. Defaults to 2000.} 
 #' }
@@ -101,7 +102,7 @@
 #' @section Estimating a sparse Hessian:
 #' Sometimes estimating the Hessian is easy (e.g., you have an analytic representation, or you are using some kind of algorithmic differentiation software).  If you do not know the Hessian, but you do know the sparsity structure, try the \pkg{sparseHessianFD} package. The routines in \pkg{sparseHessianFD} compute the Hessian using finite differencing, but in a way that exploits the sparsity structure.  In many cases, this can be faster than constructing an analytic Hessian for a large problem (e.g., when the Hessian has a block-arrow structure with a large number of blocks).
 #' 
-#' To use the \pkg{sparseHessianFD} package, you need to provide the row and column indices of the non-zero elements of the lower triangle of the Hessian. This structure cannot change during the course of the trust.optim routine.  Also, you really should provide an analytic gradient.  \pkg{sparseHessianFD} computes finite differences of the gradient, so if the gradient itself is finite-differenced, so much error is propogated through that the Hessians are nearly worthless close to the optimum.
+#' To use the \pkg{sparseHessianFD} package, you need to provide the row and column indices of the non-zero elements of the lower triangle of the Hessian. This structure cannot change during the course of the trust.optim routine.  Also, you really should provide an analytic gradient.  \pkg{sparseHessianFD} computes finite differences of the gradient, so if the gradient itself is finite-differenced, so much error is propagated through that the Hessians are nearly worthless close to the optimum.
 #' 
 #' Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 #'
@@ -119,7 +120,11 @@
 #'                        preconditioner=2L
 #'                        )
 #'                    )
-#' print(res)
+#' 
+#' print(res$solution) ## solution at minimum
+#' print(res$fval) ## function value at minimim
+#' print(res$gr) ## gradient at minimum
+#' print(res$hessian) ## Hessian at minimum
 #' 
 #' @export
 trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), control = list(), ...)

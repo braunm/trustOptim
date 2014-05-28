@@ -1,0 +1,14 @@
+^.*\\.so$
+^.*\\.o$
+^\\.git$
+^\\.Rbuildignore$
+^\\.Rhistory$
+^\\.gitignore$
+^\\.DS\_Store
+demo/trustOptim*
+demo/X00Index_cran
+README\.md
+vignettes/trustOptim\_old\.Rnw
+inst/old
+inst/doc
+

@@ -1,7 +1,7 @@
 #' @title Multivariate Rosenbrock function, derivative, Hessian
 #'
 #' @description Objective function, gradient and hessian for demos.
-#'
+#' 
 #' @param V Vector of length 2N, ordered \eqn{(x_1,y_1,x_2,y_2,\mathellipsis, x_N,y_N)}
 #'
 #' @details
@@ -59,6 +59,6 @@ hess.rosenbrock <- function(V) {
                     diagonals=list(d1,d0,d1),
                     symmetric=FALSE,
                     giveCsparse=TRUE)
-    return(H)
+    return(drop0(H))
 }
 

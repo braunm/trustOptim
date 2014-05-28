@@ -16,6 +16,16 @@ opt <- trust.optim(start,
                        preconditioner=2L
                        )
                    )
-print(opt)
+
+cat("Number of variables: ",2*N,"\n")
+cat("Solution at minimum:\n")
+print(opt$solution)
+cat("Function value at minimum:\n")
+print(opt$fval)
+cat("Gradient at minimum:\n")
+print(opt$gr)
+cat("Hessian at minimum:\n")
+print(opt$hessian)
+
 
 

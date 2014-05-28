@@ -1,7 +1,7 @@
 ##! Multivariate Rosenbrock function
 ##! V is a 2N vector, ordered (x_1,y_1,x_2,y_2,...,x_N,y_N)
 
-N <- 5
+N <- 4
 start <- as.vector(rnorm(2*N,-1,3))
 res <- trust.optim(start,
                    fn=f.rosenbrock,
@@ -13,7 +13,14 @@ res <- trust.optim(start,
                        maxit=50000L
                        )
                    )
-print(res)
 
-
+cat("Number of variables: ",2*N,"\n")
+cat("Solution at minimum:\n")
+print(opt$solution)
+cat("Function value at minimum:\n")
+print(opt$fval)
+cat("Gradient at minimum:\n")
+print(opt$gr)
+cat("Hessian at minimum:\n")
+print(opt$hessian)
 

@@ -14,10 +14,10 @@
 #' 
 #' Steihaug, Trond. 1983. The Conjugate Gradient Method and Trust
 #' Regions in Large Scale Optimization. SIAM Journal on Numerical
-#' Analysis 20 (3): 626–637.
+#' Analysis 20 (3): 626-637.
 #'
 #' @docType package
 #' @name trustOptim
-#' @import Matrix mvtnorm Rcpp RcppEigen
+#' @import Matrix Rcpp RcppEigen
 #' @useDynLib trustOptim
 NULL 
