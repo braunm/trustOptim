@@ -10,5 +10,4 @@ demo/X00Index_cran
 README\.md
 vignettes/trustOptim\_old\.Rnw
 inst/old
-inst/doc
 

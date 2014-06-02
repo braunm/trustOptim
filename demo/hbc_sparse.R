@@ -25,9 +25,10 @@ if(require(sparseHessianFD)) {
     XB <- colSums(X * B)
     log.p <- XB - log1p(exp(XB))
     Y <- sapply(log.p, function(q) return(rbinom(1,T,exp(q))))
-
+        
+    
     ## get reasonable starting values
-    reg <- glm((Y/T)~t(X)-1,family=binomial)
+    reg <- suppressWarnings(glm((Y/T)~t(X)-1,family=binomial))
     start.mean <- coefficients(reg)
     start.cov <- summary(reg)$cov.unscaled
 
