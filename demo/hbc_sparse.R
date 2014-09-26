@@ -1,4 +1,4 @@
-## Script to generate comparison timings for trustOptim
+
 
 if(require(sparseHessianFD)) {
 

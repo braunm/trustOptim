@@ -1,5 +1,12 @@
 NEWS file for trustOptim package
 
+VERSION 0.8.4.1 (Sept. 26, 2014)
+
+   o   Final version for Journal of Statistical Software, with new CITATION file.  Please cite
+       this package if using it in your work.
+
+   o   Some minor changes to the vignette, to correspond with the JStatSoft paper.
+
 VERSION 0.8.4 (May 28, 2014)
 
    o   Now using Roxygen2 for documentation and namespace management.

@@ -10,8 +10,8 @@
 #'  f(x_{1:N},y_{1:N})=\sum_{i=1}^N
 #' \left[100\left(x^2_i-y_i\right)^2+\left(x_i-1\right)^2\right]
 #' }
-#' These functions are meant to be used as a brief demonstration of
-#' how to use the \pkg{trustOptim} package.
+#' These functions are provided for the examples and demos in the
+#' \pkg{trustOptim} package.
 #'
 #' @return \describe{
 #' \item{f.rosenbrock}{a scalar value of the objective function}
@@ -29,7 +29,7 @@ f.rosenbrock <- function(V) {
     return(sum(100*(x^2-y)^2+(x-1)^2))
 }
 
-#' #' @rdname rosen
+#' @rdname rosen
 #' @export
 df.rosenbrock <- function(V) {
     N <- length(V)/2

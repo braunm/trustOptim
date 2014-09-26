@@ -14,7 +14,12 @@
 #'
 #' @details
 #'   These are functions that define the objective functions and gradients for the 
-#'   demo examples in the vignette. 
+#'   demo examples in the vignette.
+#'
+#' @references
+#' Braun, Michael.  2014.  trustOptim:  An R Package for Trust Region
+#' Optimization with Sparse Hessians. Journal of Statistical Software 60(4),
+#' 1-16. www.jstatsoft.org/v60/i04/.
 #'
 #' @rdname demo_funcs_hbc 
 #' @export
