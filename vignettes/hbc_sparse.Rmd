@@ -1,0 +1,143 @@
+---
+title:  Using trustOptim for Sparse Objective Function
+author:  Michael Braun
+date:  "`r Sys.Date()`"
+output:  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{trustOptim example: sparse}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This vignette is a demonstration of how to use the trustOptim package
+to estimate an objective function with a sparse Hessian.  The example
+is in the context of a hierarchical binary choice model.
+
+## Model specification
+
+Suppose we have a dataset of $N$ households, each with $T$
+opportunities to purchase a particular product.  Let $y_i$ be the
+number of times household $i$ purchases the product, out of the $T$
+purchase opportunities.  Furthermore, let $p_i$ be the probability of
+purchase; $p_i$ is the same for all $T$ opportunities, so we can treat
+$y_i$ as a binomial random variable.  The purchase probability $p_i$
+is heterogeneous, and depends on both $K$ continuous covariates $x_i$,
+and a heterogeneous coefficient vector $\beta_i$, such that
+
+\begin{align}
+  \label{eq:3}
+  p_i=\frac{\exp(x_i^\top\beta_i)}{1+\exp(x_i^\top\beta_i)},~i=1,\ldots, N.
+\end{align}
+
+
+The coefficients are distributed across the population of households
+following a multivariate normal distribution with mean $\mu$ and
+covariance $\Sigma$.  We assume that we know $\Sigma$, but we do not
+know $\mu$.  Instead, we place a multivariate normal prior on $\mu$,
+with mean $0$ and covariance $\Omega_0$, which is determined in
+advance.  Thus, each $\beta_i$, and $\mu$ are $K$-dimensional vectors,
+and the total number of unknown variables in the model is $P = (N+1)K$.
+
+The log posterior density, ignoring any normalization constants, is
+\begin{align}
+  \label{eq:logPostHier}
+ & \log \pi(\beta_{1:N},\mu|Y, X, \Sigma,\Omega_0)=\nonumber\\
+&\qquad\qquad\sum_{i=1}^N\left[y_i\log p_i + \left(T-y_i\right)\log \left(1-p_i\right)\right]
+-\frac{1}{2}\left(\beta_i-\mu\right)^\top\Sigma^{-1}\left(\beta_i-\mu\right)
+-\frac{1}{2}\mu^\top\Omega_0^{-1}\mu
+\end{align}
+
+Since the $\beta_i$ are drawn iid from a multivariate normal,
+$\displaystyle\frac{\partial^2\log\pi }{\partial\beta_i\partial \beta_j}=0$ for
+all $i\neq j$.  We also know that all of the $\beta_i$ are correlated
+with $\mu$.  Therefore, the Hessian will be sparse with a
+``block-arrow'' structure.  For example, if $N=6$ and $K=2$, then
+$P=14$ and the Hessian will have the pattern as illustrated in Figure
+\ref{fig:blockArrow}.
+
+
+\begin{verbbox}
+ [1,] | | . . . . . . . . . . | | 
+ [2,] | | . . . . . . . . . . | |
+ [3,] . . | | . . . . . . . . | |
+ [4,] . . | | . . . . . . . . | |
+ [5,] . . . . | | . . . . . . | | 
+ [6,] . . . . | | . . . . . . | | 
+ [7,] . . . . . . | | . . . . | | 
+ [8,] . . . . . . | | . . . . | | 
+ [9,] . . . . . . . . | | . . | | 
+[10,] . . . . . . . . | | . . | |
+[11,] . . . . . . . . . . | | | |
+[12,] . . . . . . . . . . | | | |
+[13,] | | | | | | | | | | | | | | 
+[14,] | | | | | | | | | | | | | |
+\end{verbbox}
+
+
+```{r}
+require(sparseHessianFD)
+set.seed(123)
+    
+N <- 500
+k <- 8
+T <- 20
+
+## simulate data
+x.mean <- rep(0,k)
+x.var <- rep(0.1,k)
+x.cov <- diag(x.var)
+x.cov[1,k-1] <- 0.8*sqrt(x.var[1]*x.var[k-1])
+x.cov[k-1,1] <- x.cov[1,k-1]
+
+mu <- rnorm(k,0,4)
+Omega <- diag(k)
+inv.Sigma <- rWishart(1,k+5,diag(k))[,,1]
+inv.Omega <- solve(Omega)
+
+X <- chol(x.cov) %*% matrix(rnorm(N*k),k,N) + x.mean
+B <- chol(x.cov) %*% matrix(rnorm(N*k),k,N) + mu
+XB <- colSums(X * B)
+log.p <- XB - log1p(exp(XB))
+Y <- sapply(log.p, function(q) return(rbinom(1,T,exp(q))))
+
+
+## get reasonable starting values
+reg <- suppressWarnings(glm((Y/T)~t(X)-1,family=binomial))
+start.mean <- coefficients(reg)
+start.cov <- summary(reg)$cov.unscaled
+
+start <- chol(start.cov) %*% matrix(rnorm((N+1)*k),k,N+1) + start.mean
+
+hess.struct <- hbc.hess.struct(N, k)
+
+## object from sparseHessianFD
+obj <- sparseHessianFD::new.sparse.hessian.obj(
+    start, fn=hbc.f, gr=hbc.grad,
+    hs=hess.struct,
+    Y=Y, X=X, inv.Omega=inv.Omega,
+    inv.Sigma=inv.Sigma, T=T
+)
+
+## run optimizer
+opt <- trust.optim(start, fn=obj$fn,
+                   gr = obj$gr,  
+                   hs = obj$hessian,
+                   method = "Sparse",
+                   control = list(
+                       start.trust.radius=5,
+                       stop.trust.radius = 1e-7,
+                       prec=1e-7,
+                       report.freq=1L,
+                       report.level=4L,
+                       report.precision=1L,
+                       maxit=500L,
+                       preconditioner=1L
+                   ) 
+                   )
+```	
+
+
+
+
+
+
