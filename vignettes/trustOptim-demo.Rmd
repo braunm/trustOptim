@@ -1,0 +1,148 @@
+---
+title:  Using trustOptim for Sparse Objective Function
+author:  Michael Braun
+date:  "`r Sys.Date()`"
+output:  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{trustOptim example: sparse}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This vignette is a demonstration of how to use the trustOptim package
+to estimate an objective function with a sparse Hessian.  The example
+is in the context of a hierarchical binary choice model.
+
+
+
+## Example function
+
+Before going into the details of how to use the package, let's
+consider the following example of an objective function with a sparse Hessian.
+ Suppose we have a dataset of $N$ households, each with $T$ opportunities to purchase a particular product.  Let $y_i$ be the number of times household $i$ purchases the product, out of the $T$ purchase opportunities.  Furthermore, let $p_i$ be the probability of purchase; $p_i$ is the same for all $T$ opportunities, so we can treat $y_i$ as a binomial random variable.  The purchase probability $p_i$ is heterogeneous, and depends on both $k$ continuous covariates $x_i$, and a heterogeneous coefficient vector $\beta_i$, such that
+$$
+  p_i=\frac{\exp(x_i'\beta_i)}{1+\exp(x_i'\beta_i)},~i=1 ... N
+$$
+
+The coefficients can be thought of as sensitivities to the covariates, and they are distributed across the population of households following a multivariate normal distribution with mean $\mu$ and covariance $\Sigma$.   We assume that we know $\Sigma$, but we do not know $\mu$.  Instead, we place a multivariate normal prior on $\mu$, with mean $0$ and covariance $\Omega_0$.  Thus, each $\beta_i$, and $\mu$ are $k-$dimensional vectors, and the total number of unknown variables in the model is $(N+1)k$. 
+
+The log posterior density, ignoring any normalization constants, is
+$$
+  \log \pi(\beta_{1:N},\mu|Y, X, \Sigma_0,\Omega_0)=\sum_{i=1}^Np_i^{y_i}(1-p_i)^{T-y_i}
+  -\frac{1}{2}\left(\beta_i-\mu\right)'\Sigma^{-1}\left(\beta_i-\mu\right)
+-\frac{1}{2}\mu'\Omega_0^{-1}\mu
+$$
+
+```{r, echo=FALSE}
+require(Matrix)
+require(trustOptim)
+N <- 6
+k <- 2
+nv1 <- (N+1)*k
+nels1 <- nv1^2
+nnz1 <- (N+1)*k^2 + 2*N*k^2
+nnz1LT <- (N+1)*k*(k+1)/2 + N*k^2
+Q <- 1000
+nv2 <- (Q+1)*k
+nels2 <- nv2^2
+nnz2 <- (Q+1)*k^2 + 2*Q*k^2
+nnz2LT <- (Q+1)*k*(k+1)/2 + Q*k^2
+options(scipen=999)
+```
+
+Since the $\beta_i$ are drawn iid from a multivariate normal,
+$\dfrac{\partial^2\log\pi }{\partial\beta_i\beta_j}=0$ for all $i\neq
+j$.  We also know that all of the $\beta_i$ are correlated with
+$\mu$.  The structure of the Hessian depends on how the variables are
+ordered within the vector. One such ordering is to group all of the
+coefficients for each unit together.
+
+$$
+\beta_{11},...,\beta_{1k},\beta_{21},...,\beta_{2k},...~,~...~,~\beta_{N1}~,~...~,~\beta_{Nk},\mu_1,...,\mu_k
+$$
+
+In this case, the Hessian has a "block-arrow" structure.  For example,
+if $N=`r N`$ and $k=`r k`$, then there are `r nv1` total variables, and the Hessian will have the following pattern.
+
+```{r, echo=FALSE}
+M <- as(kronecker(diag(N),matrix(1,k,k)),"lMatrix")
+M <- rBind(M, Matrix(TRUE,k,N*k))
+M <- cBind(M, Matrix(TRUE, k*(N+1), k))
+print(M)
+```
+
+There are `r nels1` elements in this symmetric matrix, but only  `r nnz1` are
+non-zero, and only `r nnz1LT` values are unique.  Although the reduction in
+RAM from using a sparse matrix structure for the Hessian may be
+modest, consider what would happen if $N=`r Q`$ instead.  In that case,
+there are `r nv2` variables in the problem, and more than $`r 
+floor(nels2/10^6)`$ million
+elements in the Hessian.  However, only $`r nnz2`$ of those elements are
+non-zero.  If we work with only the lower triangle of the Hessian we only need to work with
+only `r nnz2LT` values.
+
+
+
+
+## Using the package
+
+The functions for computing the objective function, gradient and
+Hessian for this example are in the R/binary.R file.  The package
+also includes a sample dataset with simulated data from the binary choice example.
+
+To start, we load the data, set some dimension parameters, set prior
+values for $\Sigma^{-1}$ and $\Omega^{-1}$, and simulate a
+vector of variables at which to evaluate the function.
+
+```{r}
+set.seed(123)
+data(binary)
+str(binary)
+N <- length(binary$Y)
+k <- NROW(binary$X)
+nvars <- as.integer(N*k + k)
+start <- rnorm(nvars) ## random starting values
+priors <- list(inv.Sigma = rWishart(1,k+5,diag(k))[,,1],
+               inv.Omega = diag(k))
+```
+	
+This dataset represents the simulated choices for $N= `r N`$ customers
+over $T= `r T`$ purchase opportunties, where the probability of purchase
+is influenced by $k= `r k`$ covariates.
+
+The objective function for the binary choice example is `binary.f`, the gradient function is
+`binary.grad`, and the Hessian function is `binary.hess`. The first argument to both is the variable vector, and
+the argument lists must be the same for both.  For this example, we
+need to provide the data list "binary" ($X$, $Y$ and $T$) and the prior
+parameter list ($\Sigma^{-1}$ and $\Omega^{-1}$). The `binary.hess`
+function returns the Hessian as a `dgCMatrix` object, which is a
+compressed sparse matrix class defined in the Matrix package.
+
+
+
+```{r}
+
+opt <- trust.optim(start, fn=binary.f,
+                   gr = binary.grad,  
+                   hs = binary.hess,
+                   method = "Sparse",
+                   control = list(
+                       start.trust.radius=5,
+                       stop.trust.radius = 1e-7,
+                       prec=1e-7,
+                       report.freq=1L,
+                       report.level=4L,
+                       report.precision=1L,
+                       maxit=500L,
+                       preconditioner=1L,
+                       function.scale.factor=-1
+                   ),
+                   data=binary, priors=priors
+                   )
+```	
+
+
+
+
+
+

@@ -1,0 +1,7 @@
+hbc_sparse      Demo of trust.optim on hierarchical binary choice example
+
+##trustOptim_sparse	   Demo of trust.optim on multivariate Rosenbrock function, using sparse algorithm
+
+##trustOptim_bfgs	   Demo of trust.optim on multivariate Rosenbrock function, using BFGS Hessian updates
+
+##trustOptim_sr1	   Demo of trust.optim on multivariate Rosenbrock function, using SR1 Hessian updates
