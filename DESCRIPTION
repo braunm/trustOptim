@@ -1,8 +1,8 @@
 Package: trustOptim
 Type: Package
 Title: Trust region nonlinear optimization, efficient for sparse Hessians
-Version: 0.8.4.2
-Date: 2014-09-27
+Version: 0.8.5
+Date: 2015-01-26
 Author: Michael Braun
 Maintainer: Michael Braun <braunm@smu.edu>
 URL: http://coxprofs.cox.smu.edu/braunm
@@ -12,14 +12,15 @@ Description: Trust region algorithm for nonlinear optimization. In addition to
     of both speed and memory usage) when the Hessian is sparse.
 License: MPL (>= 2.0) | GPL (>= 2)
 Depends:
-    R (>= 3.1.1)
+    R (>= 3.1.2)
 Imports:
     Matrix (>= 1.1.4),
     Rcpp (>= 0.11.1)
 Suggests:
-    sparseHessianFD
+    sparseHessianFD,
+    testthat
 LinkingTo: Rcpp (>= 0.11.1), RcppEigen (>= 0.3.2.1.2)
-Copyright: (c) 2014 Michael Braun
+Copyright: (c) 2015 Michael Braun
 Roxygen: list(wrap=FALSE)
 VignetteBuilder:  knitr
 SystemRequirements:  C++11

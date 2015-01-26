@@ -34,6 +34,7 @@
 #'     \code{symmetricMatrix}, returned only for \code{Sparse} method).}
 #'   \item{iterations}{Number of iterations before stopping}
 #'   \item{status}{A message describing the last state of the iterator}
+#'   \item{nnz}{For the Sparse method only, the number of nonzero elements in the lower triangle of the Hessian}.
 #' 
 #' @section Details:
 #'  The following sections explain how to use the package as a whole.
@@ -184,6 +185,11 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
     con[(namc <- names(control))] <- control
 
 
+  con$report.freq <- as.integer(con$report.freq)
+  con$report.level <- as.integer(con$report.level)
+  con$report.precision <- as.integer(con$report.precision)
+  con$precond.refresh.freq <- as.integer(con$precond.refresh.freq)
+  
 ## check control parameter values here     
 
   if (!is.numeric(con$start.trust.radius) || con$start.trust.radius<=0 || !is.finite(con$start.trust.radius)) {

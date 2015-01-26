@@ -1,5 +1,12 @@
 NEWS file for trustOptim package
 
+
+VERSION 0.8.5 9JAN. 26, 2015)
+
+   o   New vignette
+
+   o   Added some unit tests
+
 VERSION 0.8.4.1 (Sept. 26, 2014)
 
    o   Final version for Journal of Statistical Software, with new CITATION file.  Please cite

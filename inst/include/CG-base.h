@@ -1,4 +1,3 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
 // CG-base.cpp.  Part of the trustOptim package for the R programming language.
 
 // This file is part of trustOptim, a nonlinear optimization package
