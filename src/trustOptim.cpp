@@ -1,4 +1,3 @@
-// -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; tab-width: 8 -*-
 // trustOptim.cpp.  Part of the trustOptim package for the R programming language.
 // This file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
@@ -173,32 +172,41 @@ RcppExport SEXP quasiTR(SEXP start_, SEXP fn_, SEXP gr_,
     Function fn(fn_);
     Function gr(gr_);
 
+    std::string method_string;
+    
+    if (quasi_newton_method==1) {
+      method_string = "SR1";
+    } else {
+      method_string = "BFGS";
+    }
+
     Rfunc func(nvars, fn, gr);
   
     Map<VectorXd> startX(start.begin(),nvars); 
   
     // Control parameters for optimizer
   
-    Trust_CG_Optimizer<Map<VectorXd>, Rfunc, optHessType, optPrecondType> opt(func,
-									      startX, rad, min_rad, tol,
-									      prec, report_freq,
-									      report_level,
-									      report_precision,
-									      maxit, contract_factor,
-									      expand_factor,
-									      contract_threshold,
-									      expand_threshold_rad,
-									      expand_threshold_ap,
-									      function_scale_factor,
-									      precond_refresh_freq,
-									      precond_ID,
-									      quasi_newton_method,
-									      trust_iter);
-
+    Trust_CG_Optimizer<Map<VectorXd>, Rfunc,
+		       optHessType, optPrecondType> opt(func,
+							startX, rad, min_rad, tol,
+							prec, report_freq,
+							report_level,
+							report_precision,
+							maxit, contract_factor,
+							expand_factor,
+							contract_threshold,
+							expand_threshold_rad,
+							expand_threshold_ap,
+							function_scale_factor,
+							precond_refresh_freq,
+							precond_ID,
+							quasi_newton_method,
+							trust_iter);
+    
     opt.run();
-  
+    
     // collect results and return
-
+    
     VectorXd P(nvars);
     VectorXd grad(nvars);
 
@@ -218,7 +226,7 @@ RcppExport SEXP quasiTR(SEXP start_, SEXP fn_, SEXP gr_,
 		       Rcpp::Named("iterations") = Rcpp::wrap(iterations),
 		       Rcpp::Named("status") = Rcpp::wrap((std::string) MB_strerror(status)),
 		       Rcpp::Named("trust.radius") = Rcpp::wrap(radius),
-		       Rcpp::Named("method") = Rcpp::wrap("quasi-newton"),
+		       Rcpp::Named("method") = Rcpp::wrap(method_string),
 		       Rcpp::Named("hessian.update.method") = Rcpp::wrap(quasi_newton_method)
 		       );
    
