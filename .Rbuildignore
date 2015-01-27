@@ -12,3 +12,5 @@ inst/old/*
 data-raw/*
 ^README\.Rmd$
 ^README-.*\.png$
+README\.R
+^NEWS\.md$
