@@ -7,13 +7,13 @@
 using namespace Rcpp;
 
 // sparseTR
-List sparseTR(const NumericVector start, Function fn, Function gr, Function hs, const List control);
+List sparseTR(NumericVector start, Function fn, Function gr, Function hs, const List control);
 RcppExport SEXP trustOptim_sparseTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP hsSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const NumericVector >::type start(startSEXP );
+        Rcpp::traits::input_parameter< NumericVector >::type start(startSEXP );
         Rcpp::traits::input_parameter< Function >::type fn(fnSEXP );
         Rcpp::traits::input_parameter< Function >::type gr(grSEXP );
         Rcpp::traits::input_parameter< Function >::type hs(hsSEXP );
@@ -26,13 +26,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // quasiTR
-List quasiTR(const NumericVector start, Function fn, Function gr, const List control);
+List quasiTR(NumericVector start, Function fn, Function gr, const List control);
 RcppExport SEXP trustOptim_quasiTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const NumericVector >::type start(startSEXP );
+        Rcpp::traits::input_parameter< NumericVector >::type start(startSEXP );
         Rcpp::traits::input_parameter< Function >::type fn(fnSEXP );
         Rcpp::traits::input_parameter< Function >::type gr(grSEXP );
         Rcpp::traits::input_parameter< const List >::type control(controlSEXP );

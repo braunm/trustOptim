@@ -28,7 +28,7 @@ using Rcpp::NumericVector;
 using Rcpp::IntegerVector;
 
 //[[Rcpp::export]]
-List sparseTR(const NumericVector start,
+List sparseTR(NumericVector start,
 	      Function fn,
 	      Function gr,
 	      Function hs,
@@ -69,6 +69,7 @@ List sparseTR(const NumericVector start,
     const int trust_iter = as<int>(control["trust.iter"]);
 
     Map<VectorXd> startX(start.begin(),nvars); 
+     
     Rcpp::S4 sh_  = hs(startX);
     MappedSparseMatrix<double> sh = Rcpp::as<MappedSparseMatrix<double> >(sh_);
     int nnz = (sh.nonZeros() + nvars)/2;
@@ -119,7 +120,7 @@ List sparseTR(const NumericVector start,
 
 
 //[[Rcpp::export]]
-List  quasiTR(const NumericVector start,
+List  quasiTR(NumericVector start,
 	      Function fn,
 	      Function gr,
 	      const List control) {
