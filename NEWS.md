@@ -1,0 +1,81 @@
+NEWS file for trustOptim package
+
+
+VERSION 0.8.5 (Jan. 27, 2015)
+
+-  New vignettes that do not depend on sparseHessianFD
+
+-  Removed demos, which are replaced by the vignettes
+
+-  Converted from standard C interface to Rcpp::attributes
+
+-  Added some unit tests, using testthat.
+
+-  Removed demonstration functions that were in .R files, but are now included in the vignettes and unit tests directly.
+
+-  Removed logit.R and vech.R files, which weren't used at all.
+
+-  Replaced abs with std::abs in C++ code.
+
+-  Added NEWS.md, which can be converted to NEWS via pandoc.
+
+VERSION 0.8.4.1 (Sept. 26, 2014)
+
+-  Final version for Journal of Statistical Software, with new CITATION file.  Please cite this package if using it in your work.
+
+-  Some minor changes to the vignette, to correspond with the JStatSoft paper.
+
+VERSION 0.8.4 (May 28, 2014)
+
+-  Now using Roxygen2 for documentation and namespace management.
+
+-  Non-CRAN version for Journal of Statistical Software.
+
+
+VERSION 0.8.3 (December 7, 2013)
+
+-  For log10(x) and sqrt(x), with x being an integer, provide explicit casts from int to double (strict conformance with C++, need to compile on Solaris).
+
+VERSION 0.8.2 (November 4, 2013)
+
+-  Minor changes in the demo/choice_sparse.R and demo/choice_dense.R, so the algorithms start closer to the optimal values.
+
+-  Moved vignette code to conform to new CRAN standards.
+
+-  Updated maintainer contact information.
+
+
+VERSION 0.8.1 (June 7, 2013)
+
+-  Rewrote update_one_step() in CG-base.h so the gradient is not evaluated if we already know that the trust region will contract.  If the trust region contracts, the algorithm does not move, so the gradient does not need to be recomputed. (Thanks to Gregor Reich for contributing a change to the code).
+
+-  For report_level >= 3, the precision of the output of the current radius of the trust region now depends on the report_precision parameter.  Previously, the precision had an upper bound of 2. (Thanks to Gregor Reich for contributing a change to the code). 
+-  For the BFGS method, the default preconditioner is now the Cholesky (Hessians are guaranteed to be positive definite).  For SR1 and Sparse, the default preconditioner remains the identity matrix.
+
+-  There is a new vignette, with an added example of a smaller problem with a dense Hessian.  Both the sparse and dense Hessian examples can be run through demo(choice_sparse) and demo(choice_dense).  The code for the examples is in the demo directory.  The code for the objective functions and gradients is in R/demo_funcs.R.
+
+-  New minimum versions for dependencies (Rcpp 0.10.3 and RcppEigen 0.3.1.2.1).
+
+VERSION 0.8.0 (Dec. 27, 2012)
+
+-  Removed sparseFD method. Instead, use the sparseHessianFD package for similar funcationality.
+
+-  All ACM-licensed code was removed from the package and moved to the sparseHessianFD package.
+
+-  Disabled the diagonal preconditioner, which was segfaulting for some yet-to-be-identified reason.  Since it didn't work much better than no preconditioner at all, it's no great loss.  The modified Cholesky preconditioner remains.
+
+-  In the control list, setting preconditioner to 1 implements the modified Cholesky preconditioner. The value 2 is no longer a valid (and will default to the identity preconditioner).
+
+-  Fixed a bug where the function.scale.factor option defaulted to -1 instead of 1. It now defaults to 1.
+
+
+VERSION 0.7.1 (Sept. 27, 2012)
+
+-  Added get.fdfh function to return estimate of sparse Hessian when only the structure is known.
+
+-  Added vignette that describes how to use the package, and compares performance to some other optimizers.
+
+
+VERSION 0.7.0
+
+-  Initial upload to CRAN.

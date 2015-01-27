@@ -255,7 +255,7 @@ void Trust_CG_Optimizer<TP, TFunc, THess, TPreLLt>::updateHessian_SR1()
 
   crit = 1e-7 * sk.norm()  * work.norm();
     
-  if (abs(denom) > crit) {   // do the SR1 update only if denominator is large enough
+  if (std::abs(denom) > crit) {   // do the SR1 update only if denominator is large enough
   
     Bk.template selfadjointView<Lower>().rankUpdate(work,1/denom);
   }

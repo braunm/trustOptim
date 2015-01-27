@@ -248,10 +248,10 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     gk *= function_scale_factor;
     nrm_gk = gk.norm();
 
-    f_width = std::max(log10(abs(f)),1. ) + report_precision + 5;
-    g_width = std::max(log10(abs(nrm_gk)),1. ) + report_precision + 5;
+    f_width = std::max(log10(std::abs(f)),1. ) + report_precision + 5;
+    g_width = std::max(log10(std::abs(nrm_gk)),1. ) + report_precision + 5;
     // modified_gr
-    r_width = std::max(log10(abs(rad)),1. ) + report_precision + 5;
+    r_width = std::max(log10(std::abs(rad)),1. ) + report_precision + 5;
 
     if (!my_finite(nrm_gk)) {
 	throw MyException("Norm of gradient at starting point is not finite",

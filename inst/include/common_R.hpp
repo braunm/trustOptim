@@ -88,7 +88,7 @@ inline bool my_ret_bool(bool x) {return(x);}
 
 template<typename T>
 bool my_finite(const T& x) {
-  return( (abs(x) <= __DBL_MAX__ ) && ( x == x ) );
+  return( (std::abs(x) <= __DBL_MAX__ ) && ( x == x ) );
 }
 
 
