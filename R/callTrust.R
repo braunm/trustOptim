@@ -246,7 +246,8 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
   if (method=="Sparse") {
      
     con$quasi.newton.method <- 0L    
-    res <- .Call("sparseTR", x, fn1, gr1, hs1, con)
+##    res <- .Call("sparseTR", x, fn1, gr1, hs1, con)
+    res <- sparseTR(x, fn1, gr1, hs1, con)
     res$hessian <- Matrix::t(as(res$hessian,"symmetricMatrix"))
     
   }
@@ -266,8 +267,9 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
     } else {
       con$quasi.newton.method <- 2L
     }
-    res <- .Call("quasiTR", x, fn1, gr1, con)    
-  }
+    ##    res <- .Call("quasiTR", x, fn1, gr1, con)    
+    res <- quasiTR(x, fn1, gr1, con)
+}
  
   return(res)
 }
