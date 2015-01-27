@@ -43,44 +43,30 @@ test_that("Rosenbrock", {
     N <- 3
     start <- as.vector(rnorm(2*N,-1,3))
 
-    m <- c("Sparse","BFGS","SR1")
+    m <- list(list(hs=hess.rosen, method="Sparse", precond=0),
+              list(hs=NULL, method="BFGS", precond=0),
+              list(hs=NULL, method="SR1", precond=0),
+              list(hs=hess.rosen, method="Sparse", precond=1)
+              )
 
     for (meth in m) {        
         opt0 <- trust.optim(start,
-                           fn=f.rosen,
-                           gr=df.rosen,
-                           hs=hess.rosen,
-                           method=meth,
-                           control=list(
-                               preconditioner=0,
-                               report.freq=0L,
-                               maxit=5000L
-                           )
-                           )
+                            fn=f.rosen,
+                            gr=df.rosen,
+                            hs=meth$hs,
+                            method=meth$method,
+                            control=list(
+                                preconditioner=meth$precond,
+                                report.freq=0L,
+                                maxit=5000L
+                            )
+                            )
         
         expect_equal(opt0$fval, 0, tolerance=1e-8)
         expect_equal(opt0$solution, rep(1,2*N), tolerance=1e-8)
         expect_match(opt0$status, "Success")
-        expect_match(opt0$method, meth)
+        expect_match(opt0$method, meth$method)
     }
-
-    opt1 <- trust.optim(start,
-                        fn=f.rosen,
-                        gr=df.rosen,
-                        hs=hess.rosen,
-                        method="Sparse",
-                        control=list(
-                            preconditioner=1,
-                            report.freq=0L,
-                            maxit=5000L
-                        )
-                        )
-    
-    expect_equal(opt1$fval, 0, tolerance=1e-8)
-    expect_equal(opt1$solution, rep(1,2*N), tolerance=1e-8)
-    expect_match(opt1$status, "Success")
-    expect_match(opt1$method, "Sparse")
-
 })
           
           
