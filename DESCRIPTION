@@ -2,7 +2,7 @@ Package: trustOptim
 Type: Package
 Title: Trust region nonlinear optimization, efficient for sparse Hessians
 Version: 0.8.5
-Date: 2015-01-26
+Date: 2015-01-27
 Author: Michael Braun
 Maintainer: Michael Braun <braunm@smu.edu>
 URL: http://coxprofs.cox.smu.edu/braunm
@@ -19,7 +19,7 @@ Imports:
 Suggests:
     sparseHessianFD,
     testthat
-LinkingTo: Rcpp (>= 0.11.1), RcppEigen (>= 0.3.2.1.2)
+LinkingTo: Rcpp (>= 0.11.3), RcppEigen (>= 0.3.2.3)
 Copyright: (c) 2015 Michael Braun
 Roxygen: list(wrap=FALSE)
 VignetteBuilder:  knitr
