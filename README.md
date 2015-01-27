@@ -42,7 +42,7 @@ take a numeric vector as the first argument.
 -  **hess**:  returns the Hessian as a *dsCMatrix* object (from the
 *Matrix* package).
 
-Starting from parameter vector $x$, to minimize a function *f*, call
+Starting from parameter vector *x*, to minimize a function **f**, call
 
 ```
 opt <- trust.optim(x, f, grad, hess, method="Sparse")
