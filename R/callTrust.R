@@ -189,6 +189,7 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
   con$report.level <- as.integer(con$report.level)
   con$report.precision <- as.integer(con$report.precision)
   con$precond.refresh.freq <- as.integer(con$precond.refresh.freq)
+  con$maxit <- as.integer(con$maxit)
   
 ## check control parameter values here     
 

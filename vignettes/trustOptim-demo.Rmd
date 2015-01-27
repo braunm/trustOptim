@@ -1,27 +1,26 @@
 ---
-title:  Using trustOptim for Sparse Objective Function
+title: Using trustOptim for Unconstrained Nonlinear Optimization with Sparse Hessians
 author:  Michael Braun
 date:  "`r Sys.Date()`"
 output:  rmarkdown::html_vignette
 bibliography:  /Users/braunm/ownCloud/References/Papers/braun_refs_utf.bib
 vignette: >
-  %\VignetteIndexEntry{trustOptim example: sparse}
+  %\VignetteIndexEntry{Using trustOptim}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
 ```{r, echo = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#", message=FALSE)
+knitr::opts_chunk$set(collapse = FALSE, comment = "#", message=FALSE)
 ```
 
-This vignette provides a demonstration of how to use the *trustOptim* package
-to estimate an objective function with a sparse Hessian. Most of the
-vignette was originally published as @R_trustOptim.  This version
-contains less comparison with other optimization methods, and less of
-the underlying theory of trust region methods.  Nevertheless, please
-cite @R_trustOptim when using this package in your own research.
+Much of this vignette was originally published as
+@R_trustOptim. Please cite that article when using this package in
+your own research.  This version of the vignette is abridged with
+respect to the underlying theory, and the comparison with other
+methods.  It has more of a focus on how to use the package.
 
-# Why use this package?
+# Why use trustOptim?
 
 
 The need to optimize continuous nonlinear functions occurs frequently
@@ -29,7 +28,8 @@ in statistics, most notably in maximum likelihood and _maximum a
   posteriori_ (MAP) estimation.  Users of **R** 
 have a choice of dozens of optimization algorithms.  The most readily
 available algorithms are those that are accessed from the `optim`
-function in the base *R* distribution, and many others are described
+function in the base *R* distribution, and from the many contributed
+packages that are described
 in the CRAN Task View for _Optimization and Mathematical Programming_
 [@R_OptimTaskView]. Any particular algorithm may be more
 appropriate for some problems than for others, and having such a large
@@ -47,12 +47,7 @@ Hessian.  However, if the algorithm stores the entire dense
 inverse Hessian, its use is resource-intensive when the number of
 parameters is large.  For example, the Hessian for a 50,000 parameter
 model requires 20GB of RAM to store it as a standard, dense base
-**R** matrix.  Some conjugate gradient and limited memory methods, (e.g., *L-BFGS*,
-truncated Newton and variable metric) do not store the full Hessian
-(or its inverse), so they can be more suited for large-scale
-problems. However, they are not certain to
-approximate the curvature of the objective function accurately at any
-particular iteration, especially if the function is not convex.
+**R** matrix. 
 
 The *trustOptim* package provides a trust region algorithm that is optimized for problems for which the
 Hessian is sparse.  Sparse Hessians occur when a large number of the
@@ -70,8 +65,11 @@ those non-zero elements.  By storing sparse Hessians in a compressed
 format, and using a library of numerical algorithms that are efficient
 for sparse matrices, we can run the optimization algorithms faster,
 with a smaller memory footprint, than algorithms that operate on dense
-Hessians.  The details of the trust region algorithm are included at
-the end of this vignette.
+Hessians.
+
+The details of the trust region algorithm are included at
+the end of this vignette. The vignette for the *sparseHessianFD*
+package includes a more detailed discussion of Hessian sparsity patterns.
 
 
 # Example function

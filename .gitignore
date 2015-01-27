@@ -6,5 +6,5 @@
 .Rhistory
 .RData
 vignettes/*_cache
-inst/doc
+inst/doc/*
 
