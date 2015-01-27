@@ -30,6 +30,7 @@ The following functions return the objective, gradient, and Hessian
 (in sparse format) of this function.  
 
 ```{r}
+require(Matrix)
 f <- function(V) {
 
     N <- length(V)/2
