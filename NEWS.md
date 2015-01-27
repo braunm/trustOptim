@@ -1,10 +1,5 @@
----
-title:  NEWS for trustOptim package
-output:
-  md_document:
-    variant: markdown_github
----
 
+# NEWS for trustOptim package
 
 VERSION 0.8.5 (Jan. 27, 2015)
 
