@@ -15,9 +15,23 @@ A common case of a sparse Hessian is a hierarchical model that assumes condition
 Getting the package
 ===================
 
-The package is available on CRAN. A development version is available at github.com/braunm/trustOptim.
+The latest release version is available on CRAN. You should be able to install it with a simple `install.packages("trustOptim")`.
+
+A development version is available at github.com/braunm/trustOptim.
 
 Using the package
 =================
 
-The `trust.optim` function calls the optimizer. See the vignettes for examples, and the package manual for details, options, etc.
+The `trust.optim` function calls the optimizer.
+
+The objective function is defined by three R functions, all of which take a numeric vector as the first argument.
+
+-   \[f\]: returns the objective function as a numeric scalar value
+-   \[grad\]: returns the gradient as a numeric vector
+-   \[hess\]: returns the Hessian as a \(dsCMatrix\) object (from the \(Matrix\) package).
+
+Starting from parameter vector \(x\), to minimize a function \[f\], call
+
+    opt <- trust.optim(x, f, grad, hess, method="Sparse")
+
+See the vignettes for examples, and the package manual for details, options, etc.

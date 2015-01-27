@@ -20,6 +20,6 @@
 #'
 #' @docType package
 #' @name trustOptim
-#' @import Matrix Rcpp RcppEigen
+#' @import Matrix Rcpp
 #' @useDynLib trustOptim
 NULL 

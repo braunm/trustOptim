@@ -14,3 +14,4 @@ data-raw/*
 ^README-.*\.png$
 README\.R
 ^NEWS\.md$
+^cran-comments\.md$
