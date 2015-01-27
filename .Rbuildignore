@@ -8,6 +8,4 @@
 demo/trustOptim*
 demo/X00Index_cran
 README\.md
-inst/old
-
-
+inst/old/*

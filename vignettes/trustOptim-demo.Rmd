@@ -3,7 +3,7 @@ title: Using trustOptim for Unconstrained Nonlinear Optimization with Sparse Hes
 author:  Michael Braun
 date:  "`r Sys.Date()`"
 output:  rmarkdown::html_vignette
-bibliography:  /Users/braunm/ownCloud/References/Papers/braun_refs_utf.bib
+bibliography:  trustOptim.bib
 vignette: >
   %\VignetteIndexEntry{Using trustOptim}
   %\VignetteEngine{knitr::rmarkdown}
