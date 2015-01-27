@@ -98,7 +98,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 # [12,] . . . . . . . . . . | | | |
 # [13,] | | | | | | | | | | | | | |
 # [14,] | | | | | | | | | | | | | |</code></pre>
-<p>There are 196 elements in this symmetric matrix, but only 76 are non-zero, and only 45 values are unique. Although the reduction in RAM from using a sparse matrix structure for the Hessian may be modest, consider what would happen if <span class="math">\(N=1000\)</span> instead. In that case, there are 2002 variables in the problem, and more than <span class="math">\(4\)</span> million elements in the Hessian. However, only <span class="math">\(1.2004\times 10^{4}\)</span> of those elements are non-zero. If we work with only the lower triangle of the Hessian we only need to work with only 7003 values.</p>
+<p>There are 196 elements in this symmetric matrix, but only 76 are non-zero, and only 45 values are unique. Although the reduction in RAM from using a sparse matrix structure for the Hessian may be modest, consider what would happen if <span class="math">\(N=1000\)</span> instead. In that case, there are 2002 variables in the problem, and more than <span class="math">\(4\)</span> million elements in the Hessian. However, only <span class="math">\(12004\)</span> of those elements are non-zero. If we work with only the lower triangle of the Hessian we only need to work with only 7003 values.</p>
 </div>
 <div id="using-the-package" class="section level1">
 <h1>Using the package</h1>

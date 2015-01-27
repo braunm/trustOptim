@@ -5,10 +5,7 @@ Version: 0.8.5
 Date: 2015-01-27
 Authors@R: "Michael Braun <braunm@smu.edu> [aut, cre]"
 URL: http://coxprofs.cox.smu.edu/braunm
-Description: Trust region algorithm for nonlinear optimization. In addition to
-    being more stable and robust than optim, this package includes
-    methods that are scalable and efficient (in terms
-    of both speed and memory usage) when the Hessian is sparse.
+Description: Trust region algorithm for nonlinear optimization.  Efficient when the Hessian of the objective function is sparse (i.e., relatively few nonzero cross-partial derivatives).
 License: MPL (>= 2.0)
 Depends:
     R (>= 3.1.2),

@@ -3,7 +3,7 @@ title: A Quick Demo of trustOptim
 author:  Michael Braun
 date:  "`r Sys.Date()`"
 output:  rmarkdown::html_vignette
-bibliography:  /Users/braunm/ownCloud/References/Papers/braun_refs_utf.bib
+bibliography:  trustOptim.bib
 vignette: >
   %\VignetteIndexEntry{Quick demo}
   %\VignetteEngine{knitr::rmarkdown}
