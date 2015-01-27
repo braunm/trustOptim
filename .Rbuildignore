@@ -10,3 +10,5 @@ demo/X00Index_cran
 README\.md
 inst/old/*
 data-raw/*
+^README\.Rmd$
+^README-.*\.png$

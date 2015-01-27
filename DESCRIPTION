@@ -16,7 +16,6 @@ Depends:
     RcppEigen (>= 0.3.2.3),
     Matrix (>= 1.1.4)
 Suggests:
-    sparseHessianFD,
     testthat,
     knitr
 LinkingTo: Rcpp, RcppEigen

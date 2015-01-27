@@ -1,11 +1,19 @@
 NEWS file for trustOptim package
 
 
-VERSION 0.8.5 9JAN. 26, 2015)
+VERSION 0.8.5 (Jan. 27, 2015)
 
-   o   New vignette
+   o   New vignettes that do not depend on sparseHessianFD
 
-   o   Added some unit tests
+   o   Removed demos, which are replaced by the vignettes
+
+   o   Converted from standard C interface to Rcpp::attributes
+
+   o   Added some unit tests, using testthat.
+
+   o   Removed demonstration functions that were in .R files, but are now included in the vignettes and unit tests directly.
+
+   o   Removed logit.R and vech.R files, which weren't used at all.
 
 VERSION 0.8.4.1 (Sept. 26, 2014)
 
