@@ -112,13 +112,13 @@ One way to *potentially* speed up convergence (but not necessarily
 compute time) is to apply a preconditioner to the algorithm.  Other
 than the identity matrix (the default), the package current supports
 only a modified Cholesky preconditioner.  This is implemented with a
-control parameter `preconditioner=as.integer(1)`. To save space, we
+control parameter `preconditioner=1`. To save space, we
 report the optimizer status only ever 10 iterations.
 
 
 ```{r}
 opt1 <- trust.optim(start, fn=f, gr=df, hs=hess, method="Sparse",
-      control=list(preconditioner=as.integer(1), report.freq=10))
+      control=list(preconditioner=1, report.freq=10))
 ```
 
 Here, we see that adding the preconditioner actually increases the

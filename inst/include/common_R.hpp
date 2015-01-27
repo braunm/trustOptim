@@ -2,7 +2,7 @@
 // common_R.hpp -- this file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
 //
-// Copyright (C) 2013 Michael Braun
+// Copyright (C) 2013-2015 Michael Braun
 //
 // This Source Code Form is subject to the license terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
