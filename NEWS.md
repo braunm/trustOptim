@@ -1,5 +1,5 @@
 
-# NEWS for trustOptim package
+## NEWS for trustOptim package
 
 VERSION 0.8.5 (Jan. 27, 2015)
 
