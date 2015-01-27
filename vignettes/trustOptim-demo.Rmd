@@ -90,7 +90,7 @@ $$
 -\frac{1}{2}\mu'\Omega_0^{-1}\mu
 $$
 
-```{r, echo=FALSE, cache=TRUE}
+```{r, echo=FALSE}
 require(Matrix)
 require(trustOptim)
 N <- 6
@@ -121,7 +121,7 @@ $$
 In this case, the Hessian has a "block-arrow" structure.  For example,
 if $N=`r N`$ and $k=`r k`$, then there are `r nv1` total variables, and the Hessian will have the following pattern.
 
-```{r, echo=FALSE, cache=TRUE}
+```{r, echo=FALSE}
 M <- as(kronecker(diag(N),matrix(1,k,k)),"lMatrix")
 M <- rBind(M, Matrix(TRUE,k,N*k))
 M <- cBind(M, Matrix(TRUE, k*(N+1), k))

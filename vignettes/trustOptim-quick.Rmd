@@ -30,6 +30,7 @@ The following functions return the objective, gradient, and Hessian
 (in sparse format) of this function.  
 
 ```{r}
+require(trustOptim)
 require(Matrix)
 f <- function(V) {
 
