@@ -37,12 +37,12 @@ The `trust.optim` function calls the optimizer.
 The objective function is defined by three R functions, all of which
 take a numeric vector as the first argument.
 
--  $$f$$:  returns the objective function as a numeric scalar value
--  $$grad$$:  returns the gradient as a numeric vector
--  $$hess$$:  returns the Hessian as a $dsCMatrix$ object (from the
-$Matrix$ package).
+-  **f**:  returns the objective function as a numeric scalar value
+-  **grad**:  returns the gradient as a numeric vector
+-  **hess**:  returns the Hessian as a *dsCMatrix* object (from the
+*Matrix* package).
 
-Starting from parameter vector $x$, to minimize a function $$f$$, call
+Starting from parameter vector $x$, to minimize a function *f*, call
 
 ```
 opt <- trust.optim(x, f, grad, hess, method="Sparse")
