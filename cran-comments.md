@@ -1,5 +1,10 @@
 ##Submission notes for trustOptim, version 0.8.5
 
+### Resubmission response notes:
+
+-  Added a LF at the end of src/Makevars
+-  Specified the Authors@R field in terms of a person() function.
+
 
 ### Test environments
 
