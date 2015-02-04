@@ -1,7 +1,7 @@
 Package: trustOptim
 Type: Package
 Title: Trust Region Optimization for Nonlinear Functions with Sparse Hessians
-Version: 0.8.5
+Version: 0.8.5.9990
 Date: 2015-02-04
 Authors@R: person(given="Michael", family="Braun", email="braunm@smu.edu", role=c("aut","cre","cph"))
 URL: http://coxprofs.cox.smu.edu/braunm
