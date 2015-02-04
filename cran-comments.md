@@ -1,13 +1,18 @@
 ##Submission notes for trustOptim, version 0.8.5
 
+### Resubmission response notes:
+
+-  Added a LF at the end of src/Makevars
+-  Specified the Authors@R field in terms of a person() function.
+
 
 ### Test environments
 
--  local OS X 10.10.1 install, R 3.1.2, CRAN compiled binary
--  win_builder
+-  local OS X 10.10.2 install, R 3.1.2, CRAN compiled binary
+-  win_builder, both release and devel (also at resubmission)
 
 ### R CMD check results
-There were no ERRORs or WARNINGs
+There were no ERRORs or WARNINGs.
 
 NOTE is probably related to changing from the Author/Maintainer fields
 to the Authors@R field in the DESCRIPTION file.  There is no change to
