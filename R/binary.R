@@ -18,7 +18,6 @@
 #' @details Hessian is sparse, and returned as a dgcMatrix object
 #' @rdname binary
 #' @export
-
 binary.f <- function(P, data, priors, order.row=FALSE) {
 
     N <- length(data$Y)
