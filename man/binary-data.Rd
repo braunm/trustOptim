@@ -7,3 +7,4 @@
 \description{
 Simulated data.  See vignette.  Generated from data-raw/binary.R
 }
+
