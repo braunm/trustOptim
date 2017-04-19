@@ -8,7 +8,7 @@ Maintainer: Michael Braun <braunm@smu.edu>
 URL: http://coxprofs.cox.smu.edu/braunm
 Description: Trust region algorithm for nonlinear optimization. Efficient when
     the Hessian of the objective function is sparse (i.e., relatively few nonzero
-    cross-partial derivatives).
+    cross-partial derivatives). See Braun, M. (2014) <doi:10.18637/jss.v060.i04>.
 License: MPL (>= 2.0)
 Depends:
     R (>= 3.1.2)
