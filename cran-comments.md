@@ -1,5 +1,12 @@
 ##Submission notes for trustOptim, version 0.8.6
 
+
+###Resubmission notes:
+-  As requested by U. Ligges:
+    -  Added DOI to JStatSoft article to Description field in
+    DESCRIPTION file.
+	-  Included an example for trust.optim function (copied from vignette)
+
 ### Changes from last version
 
 -  Explicit registration of native routines.

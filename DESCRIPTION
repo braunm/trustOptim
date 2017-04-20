@@ -24,4 +24,4 @@ Copyright: (c) 2015-2017 Michael Braun
 Roxygen: list(wrap=FALSE)
 VignetteBuilder: knitr
 SystemRequirements: C++11
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1

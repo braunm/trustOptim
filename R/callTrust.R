@@ -106,6 +106,29 @@
 #' To use the \pkg{sparseHessianFD} package, you need to provide the row and column indices of the non-zero elements of the lower triangle of the Hessian. This structure cannot change during the course of the trust.optim routine.  Also, you really should provide an analytic gradient.  \pkg{sparseHessianFD} computes finite differences of the gradient, so if the gradient itself is finite-differenced, so much error is propagated through that the Hessians are nearly worthless close to the optimum.
 #'
 #' Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
+#' @examples
+#' data(binary)
+#' str(binary)
+#' N <- length(binary$Y)
+#' k <- NROW(binary$X)
+#' nvars <- as.integer(N*k + k)
+#' start <- rnorm(nvars) ## random starting values
+#' priors <- list(inv.Sigma = rWishart(1,k+5,diag(k))[,,1],
+#'                inv.Omega = diag(k))
+#' opt <- trust.optim(start, fn=binary.f,
+#'                   gr = binary.grad,  
+#'                   hs = binary.hess,
+#'                   method = "Sparse",
+#'                   control = list(
+#'                       prec=1e-7,
+#'                       report.precision=1L,
+#'                       maxit=500L,
+#'                       preconditioner=1L,
+#'                       function.scale.factor=-1
+#'                   ),
+#'                   data=binary, priors=priors
+#'                   )
+#' 
 #' @export
 trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), control = list(), ...)
 {

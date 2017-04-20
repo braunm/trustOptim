@@ -24,3 +24,4 @@ Steihaug, Trond. 1983. The Conjugate Gradient Method and Trust
 Regions in Large Scale Optimization. SIAM Journal on Numerical
 Analysis 20(3), 626-637.
 }
+
