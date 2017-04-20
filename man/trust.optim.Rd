@@ -132,8 +132,6 @@ To use the \pkg{sparseHessianFD} package, you need to provide the row and column
 Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 }
 \examples{
-data(binary)
-str(binary)
 N <- length(binary$Y)
 k <- NROW(binary$X)
 nvars <- as.integer(N*k + k)
