@@ -107,6 +107,7 @@
 #'
 #' Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 #' @examples
+#' \dontrun{
 #' data(binary)
 #' N <- length(binary$Y)
 #' k <- NROW(binary$X)
@@ -122,6 +123,7 @@
 #'                   ),
 #'                   data=binary, priors=priors
 #'                   )
+#' }
 #' 
 #' @export
 trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), control = list(), ...)

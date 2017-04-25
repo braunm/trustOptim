@@ -5,7 +5,8 @@
 -  As requested by U. Ligges:
     -  Added DOI to JStatSoft article to Description field in
     DESCRIPTION file.
-	-  Included an example for trust.optim function (copied from vignette)
+	-  Included an example for trust.optim function (copied from
+       vignette). Example is not run because of time constraints.
 
 ### Changes from last version
 
@@ -15,7 +16,7 @@
 ### Test environments
 
 -  local macOS 10.12.4 install
--  R 3.3.3 (CRAN compiled binary) and R 3.4.0 RC  (r72542, binary from r.research.att.com).
+-  R 3.3.3 (CRAN compiled binary) and R 3.4.0 (CRAN compiled binary)
 -  win_builder, both R-release and R-devel
 
 

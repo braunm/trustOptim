@@ -131,7 +131,9 @@ To use the \pkg{sparseHessianFD} package, you need to provide the row and column
 
 Of course, \pkg{sparseHessianFD} is useful only for the \code{Sparse} method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.
 }
+
 \examples{
+\dontrun{
 data(binary)
 N <- length(binary$Y)
 k <- NROW(binary$X)
@@ -142,12 +144,11 @@ opt <- trust.optim(start, fn=binary.f,
                   hs = binary.hess,
                   method = "Sparse",
                   control = list(
-              ##        prec=1e-4,
                       report.precision=1L,
                       function.scale.factor=-1
                   ),
                   data=binary, priors=priors
                   )
-
 }
 
+}
