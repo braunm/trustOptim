@@ -1,6 +1,14 @@
 
 NEWS for trustOptim package
 
+VERSION 0.8.6 (April 18, 2017)
+
+-   Add explicit registration of compiled functions, as required for R
+    3.4.0.
+
+-   Fixed various, Depends, Imports, Suggests, and LinkingTo statements
+    to comply with new CRAN requirements since previous release.
+
 VERSION 0.8.5 (Jan. 27, 2015)
 
 -   New vignettes that do not depend on sparseHessianFD

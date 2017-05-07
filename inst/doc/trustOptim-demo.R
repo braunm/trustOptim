@@ -1,7 +1,7 @@
-## ----, echo = FALSE------------------------------------------------------
+## ---- echo = FALSE-------------------------------------------------------
 knitr::opts_chunk$set(collapse = FALSE, comment = "#", message=FALSE)
 
-## ----, echo=FALSE--------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
 require(Matrix)
 require(trustOptim)
 N <- 6
@@ -17,7 +17,7 @@ nnz2 <- (Q+1)*k^2 + 2*Q*k^2
 nnz2LT <- (Q+1)*k*(k+1)/2 + Q*k^2
 options(scipen=999)
 
-## ----, echo=FALSE--------------------------------------------------------
+## ---- echo=FALSE---------------------------------------------------------
 M <- as(kronecker(diag(N),matrix(1,k,k)),"lMatrix")
 M <- rBind(M, Matrix(TRUE,k,N*k))
 M <- cBind(M, Matrix(TRUE, k*(N+1), k))
