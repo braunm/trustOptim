@@ -11,15 +11,15 @@ Description: Trust region algorithm for nonlinear optimization. Efficient when
     cross-partial derivatives). See Braun, M. (2014) <doi:10.18637/jss.v060.i04>.
 License: MPL (>= 2.0)
 Depends:
-    R (>= 3.1.2)
+    R (>= 3.4.0)
 Suggests:
     testthat,
     knitr
 Imports:
-    Matrix (>= 1.2.8),
-    Rcpp (>= 0.12.8),
+    Matrix (>= 1.2.10),
+    Rcpp (>= 0.12.10),
     methods
-LinkingTo: Rcpp, RcppEigen (>= 0.3.2.9.1)
+LinkingTo: Rcpp, RcppEigen (>= 0.3.3.3.0)
 Copyright: (c) 2015-2017 Michael Braun
 Roxygen: list(wrap=FALSE)
 VignetteBuilder: knitr
