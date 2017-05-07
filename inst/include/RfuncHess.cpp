@@ -125,7 +125,7 @@ public:
 		       P.derived().data() + P.size());
     
     Rcpp::S4 sh_ = hs(pars);
-    MappedSparseMatrix<double> sh(Rcpp::as<MappedSparseMatrix<double> >(sh_));
+    Map<SparseMatrix<double> > sh(Rcpp::as<Map<SparseMatrix<double> > >(sh_));
     out = sh.selfadjointView<Lower>();
     
   }

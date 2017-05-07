@@ -478,9 +478,7 @@ void Trust_CG_Base<TP, TFunc, THess, TPreLLt>::report_header() {
     if (report_level >= 1) {
 	TRUST_COUT << endl;
     }
-
 }
-
 
 template<typename TP, typename TFunc, typename THess, typename TPreLLt>
 void Trust_CG_Base<TP, TFunc, THess, TPreLLt>::report_state(const int& iter) {

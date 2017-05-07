@@ -1,6 +1,11 @@
 
 ## NEWS for trustOptim package
 
+VERSION 0.8.6.1 (May 7, 2017)
+
+- Replaced deprecated MappedSparseMatrix with Map<SparseMatrix>  for RcppEigen 0.3.3.3.0.
+
+
 VERSION 0.8.6 (April 18, 2017)
 
 - Add explicit registration of compiled functions, as required for R 3.4.0.
