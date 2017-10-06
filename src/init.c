@@ -5,12 +5,12 @@
 
 
 /* .Call calls */
-extern SEXP trustOptim_quasiTR(SEXP, SEXP, SEXP, SEXP);
-extern SEXP trustOptim_sparseTR(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP _trustOptim_quasiTR(SEXP, SEXP, SEXP, SEXP);
+extern SEXP _trustOptim_sparseTR(SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"trustOptim_quasiTR",  (DL_FUNC) &trustOptim_quasiTR,  4},
-    {"trustOptim_sparseTR", (DL_FUNC) &trustOptim_sparseTR, 5},
+    {"_trustOptim_quasiTR",  (DL_FUNC) &_trustOptim_quasiTR,  4},
+    {"_trustOptim_sparseTR", (DL_FUNC) &_trustOptim_sparseTR, 5},
     {NULL, NULL, 0}
 };
 

@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 sparseTR <- function(start, fn, gr, hs, control) {
-    .Call('trustOptim_sparseTR', PACKAGE = 'trustOptim', start, fn, gr, hs, control)
+    .Call(`_trustOptim_sparseTR`, start, fn, gr, hs, control)
 }
 
 quasiTR <- function(start, fn, gr, control) {
-    .Call('trustOptim_quasiTR', PACKAGE = 'trustOptim', start, fn, gr, control)
+    .Call(`_trustOptim_quasiTR`, start, fn, gr, control)
 }
 

@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // sparseTR
 List sparseTR(NumericVector start, Function fn, Function gr, Function hs, const List control);
-RcppExport SEXP trustOptim_sparseTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP hsSEXP, SEXP controlSEXP) {
+RcppExport SEXP _trustOptim_sparseTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP hsSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,7 @@ END_RCPP
 }
 // quasiTR
 List quasiTR(NumericVector start, Function fn, Function gr, const List control);
-RcppExport SEXP trustOptim_quasiTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP controlSEXP) {
+RcppExport SEXP _trustOptim_quasiTR(SEXP startSEXP, SEXP fnSEXP, SEXP grSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
