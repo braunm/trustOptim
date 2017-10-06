@@ -6,6 +6,8 @@ VERSION 0.8.6.1 (October 6, 2017)
 - Modified registration of native routines in src/init.c to be
    compatible with new Rcpp naming convention.
 
+- Replaced deprecated MappedSparseMatrix with Map<SparseMatrix>  for RcppEigen 0.3.3.3.0.
+
 VERSION 0.8.6 (April 18, 2017)
 
 - Add explicit registration of compiled functions, as required for R 3.4.0.
