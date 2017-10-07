@@ -22,7 +22,6 @@ Imports:
     Rcpp (>= 0.12.13),
     methods
 LinkingTo: Rcpp, RcppEigen (>= 0.3.3.3.0)
->>>>>>> 6ca3f1d90730ddfd85b471e0fcc97289491e6f0f
 Copyright: (c) 2015-2017 Michael Braun
 Roxygen: list(wrap=FALSE)
 VignetteBuilder: knitr
