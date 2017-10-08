@@ -1,22 +1,15 @@
-##Submission notes for trustOptim, version 0.8.6
+##Submission notes for trustOptim, version 0.8.6.1
 
-
-###Resubmission notes:
--  As requested by U. Ligges:
-    -  Added DOI to JStatSoft article to Description field in
-    DESCRIPTION file.
-	-  Included an example for trust.optim function (copied from
-       vignette). Example is not run because of time constraints.
 
 ### Changes from last version
 
--  Explicit registration of native routines.
--  In vignette, fixed canonical URLs for CRAN Task Views.
+-  Fix registration of native routines, related to changes in Rcpp.
+
 
 ### Test environments
 
--  local macOS 10.12.4 install
--  R 3.3.3 (CRAN compiled binary) and R 3.4.0 (CRAN compiled binary)
+-  local macOS 10.12.6 install
+-  R 3.4.2 (CRAN compiled binary)
 -  win_builder, both R-release and R-devel
 
 

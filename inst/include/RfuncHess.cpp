@@ -17,7 +17,6 @@
 
 using Eigen::Matrix;
 using Eigen::MatrixBase;
-using Eigen::MappedSparseMatrix;
 using Eigen::Dynamic;
 using Eigen::VectorXi;
 using Eigen::VectorXd;
