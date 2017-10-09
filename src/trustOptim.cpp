@@ -71,7 +71,7 @@ List sparseTR(NumericVector start,
     Map<VectorXd> startX(start.begin(),nvars); 
      
     Rcpp::S4 sh_  = hs(startX);
-    MappedSparseMatrix<double> sh = Rcpp::as<MappedSparseMatrix<double> >(sh_);
+    Map<SparseMatrix<double> > sh = Rcpp::as<Map<SparseMatrix<double>>>(sh_);
     int nnz = (sh.nonZeros() + nvars)/2;
 
     RfuncHess func(nvars, nnz, fn, gr, hs);
@@ -91,7 +91,7 @@ List sparseTR(NumericVector start,
 
     VectorXd P(nvars);
     VectorXd grad(nvars);
-    SparseMatrix<double> hess(nvars,nvars);
+    optHessType hess(nvars,nvars);
     hess.reserve(nnz);
 
     double fval, radius;
