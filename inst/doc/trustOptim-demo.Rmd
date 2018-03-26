@@ -25,7 +25,7 @@ methods.  It has more of a focus on how to use the package.
 
 The need to optimize continuous nonlinear functions occurs frequently
 in statistics, most notably in maximum likelihood and _maximum a
-  posteriori_ (MAP) estimation.  Users of **R** 
+  posteriori_ (MAP) estimation.  Users of **R**
 have a choice of dozens of optimization algorithms.  The most readily
 available algorithms are those that are accessed from the `optim`
 function in the base *R* distribution, and from the many contributed
@@ -47,7 +47,7 @@ Hessian.  However, if the algorithm stores the entire dense
 inverse Hessian, its use is resource-intensive when the number of
 parameters is large.  For example, the Hessian for a 50,000 parameter
 model requires 20GB of RAM to store it as a standard, dense base
-**R** matrix. 
+**R** matrix.
 
 The *trustOptim* package provides a trust region algorithm that is optimized for problems for which the
 Hessian is sparse.  Sparse Hessians occur when a large number of the
@@ -81,7 +81,7 @@ $$
   p_i=\frac{\exp(x_i'\beta_i)}{1+\exp(x_i'\beta_i)},~i=1 ... N
 $$
 
-The coefficients can be thought of as sensitivities to the covariates, and they are distributed across the population of households following a multivariate normal distribution with mean $\mu$ and covariance $\Sigma$.   We assume that we know $\Sigma$, but we do not know $\mu$.  Instead, we place a multivariate normal prior on $\mu$, with mean $0$ and covariance $\Omega_0$.  Thus, each $\beta_i$, and $\mu$ are $k-$dimensional vectors, and the total number of unknown variables in the model is $(N+1)k$. 
+The coefficients can be thought of as sensitivities to the covariates, and they are distributed across the population of households following a multivariate normal distribution with mean $\mu$ and covariance $\Sigma$.   We assume that we know $\Sigma$, but we do not know $\mu$.  Instead, we place a multivariate normal prior on $\mu$, with mean $0$ and covariance $\Omega_0$.  Thus, each $\beta_i$, and $\mu$ are $k-$dimensional vectors, and the total number of unknown variables in the model is $(N+1)k$.
 
 The log posterior density, ignoring any normalization constants, is
 $$
@@ -123,8 +123,8 @@ if $N=`r N`$ and $k=`r k`$, then there are `r nv1` total variables, and the Hess
 
 ```{r, echo=FALSE}
 M <- as(kronecker(diag(N),matrix(1,k,k)),"lMatrix")
-M <- rBind(M, Matrix(TRUE,k,N*k))
-M <- cBind(M, Matrix(TRUE, k*(N+1), k))
+M <- rbind(M, Matrix(TRUE,k,N*k))
+M <- cbind(M, Matrix(TRUE, k*(N+1), k))
 print(M)
 ```
 
@@ -132,8 +132,7 @@ There are `r nels1` elements in this symmetric matrix, but only  `r nnz1` are
 non-zero, and only `r nnz1LT` values are unique.  Although the reduction in
 RAM from using a sparse matrix structure for the Hessian may be
 modest, consider what would happen if $N=`r Q`$ instead.  In that case,
-there are `r nv2` variables in the problem, and more than $`r 
-floor(nels2/10^6)`$ million
+there are `r nv2` variables in the problem, and more than $`r floor(nels2/10^6)`$ million
 elements in the Hessian.  However, only $`r nnz2`$ of those elements are
 non-zero.  If we work with only the lower triangle of the Hessian we only need to work with
 only `r nnz2LT` values.
@@ -163,7 +162,7 @@ start <- rnorm(nvars) ## random starting values
 priors <- list(inv.Sigma = rWishart(1,k+5,diag(k))[,,1],
                inv.Omega = diag(k))
 ```
-	
+
 This dataset represents the simulated choices for $N= `r N`$ customers
 over $T= `r binary$T`$ purchase opportunties, where the probability of purchase
 is influenced by $k= `r k`$ covariates.
@@ -182,7 +181,7 @@ compressed sparse matrix class defined in the Matrix package.
 ```{r}
 
 opt <- trust.optim(start, fn=binary.f,
-                   gr = binary.grad,  
+                   gr = binary.grad,
                    hs = binary.hess,
                    method = "Sparse",
                    control = list(
@@ -196,7 +195,7 @@ opt <- trust.optim(start, fn=binary.f,
                    ),
                    data=binary, priors=priors
                    )
-```	
+```
 
 
 

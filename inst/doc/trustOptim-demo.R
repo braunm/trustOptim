@@ -19,8 +19,8 @@ options(scipen=999)
 
 ## ---- echo=FALSE---------------------------------------------------------
 M <- as(kronecker(diag(N),matrix(1,k,k)),"lMatrix")
-M <- rBind(M, Matrix(TRUE,k,N*k))
-M <- cBind(M, Matrix(TRUE, k*(N+1), k))
+M <- rbind(M, Matrix(TRUE,k,N*k))
+M <- cbind(M, Matrix(TRUE, k*(N+1), k))
 print(M)
 
 ## ------------------------------------------------------------------------
@@ -37,7 +37,7 @@ priors <- list(inv.Sigma = rWishart(1,k+5,diag(k))[,,1],
 ## ------------------------------------------------------------------------
 
 opt <- trust.optim(start, fn=binary.f,
-                   gr = binary.grad,  
+                   gr = binary.grad,
                    hs = binary.hess,
                    method = "Sparse",
                    control = list(
