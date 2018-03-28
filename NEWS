@@ -1,6 +1,12 @@
 
 NEWS for trustOptim package
 
+
+VERSION 0.8.6.2 (March 26, 2018)
+
+-   Removed deprecated Matrix package functions rBind and cBind, and
+    replaced them with their rbind and cbind counterparts.
+
 VERSION 0.8.6.1 (October 6, 2017)
 
 -   Modified registration of native routines in src/init.c to be
