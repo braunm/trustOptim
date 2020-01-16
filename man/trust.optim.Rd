@@ -4,8 +4,15 @@
 \alias{trust.optim}
 \title{Nonlinear optimizers using trust regions.}
 \usage{
-trust.optim(x, fn, gr, hs = NULL, method = c("SR1", "BFGS", "Sparse"),
-  control = list(), ...)
+trust.optim(
+  x,
+  fn,
+  gr,
+  hs = NULL,
+  method = c("SR1", "BFGS", "Sparse"),
+  control = list(),
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector of starting values for the optimizer.}
