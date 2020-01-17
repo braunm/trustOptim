@@ -51,8 +51,12 @@ public:
     
     Eigen::MatrixBase<Tpars>& P = const_cast<Eigen::MatrixBase<Tpars>& >(P_);
     if (P.size()!=nvars) {
-      throw MyException("Incorrect number of parameters\n",
+      //throw MyException("Incorrect number of parameters\n",
+      //		__FILE__, __LINE__);
+
+      throw_exception("Incorrect number of parameters\n",
 			__FILE__, __LINE__);
+
     }
     
     Rcpp::NumericVector pars(P.derived().data(),
@@ -73,13 +77,20 @@ public:
       df = const_cast<Eigen::MatrixBase<Tgrad>& >(df_);
     
     if (P.size()!=nvars){
-      throw MyException("Incorrect number of parameters\n",
+      //    throw MyException("Incorrect number of parameters\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect number of parameters\n",
 			__FILE__, __LINE__);
+
+
+      
     }
 
-    if (df.size()!=nvars) {
-      throw MyException("Incorrect gradient length\n",
-			__FILE__, __LINE__);
+    if (df.size()!=nvars) {     
+      //     throw MyException("Incorrect gradient length\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect gradient length\n",
+		      __FILE__, __LINE__);
     }
     
     NumericVector pars(P.derived().data(),
@@ -116,8 +127,10 @@ public:
     using Eigen::VectorXd;
     
     if (P.size()!=nvars) {
-      throw MyException("Incorrect number of parameters\n",
-			__FILE__, __LINE__);
+      // throw MyException("Incorrect number of parameters\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect number of parameters\n",
+		      __FILE__, __LINE__);      
     }
     
     NumericVector pars(P.derived().data(),

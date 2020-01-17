@@ -16,7 +16,7 @@
 #define TRUST_COUT Rcpp::Rcout
 #endif
 
-#define ERROR_HANDLER R_Interface_Error_Handler
+// #define ERROR_HANDLER R_Interface_Error_Handler
 
 #include <Rcpp.h>
 #include <RcppEigen.h>
@@ -27,6 +27,25 @@
 #include <algorithm>
 #include <string>
 #include <cstring>
+
+
+void throw_exception(//const std::string extype,
+		     const std::string reason,
+		     const std::string file,
+		     const int line)
+{
+  
+  std::ostringstream oss;
+  
+  oss << "\nException in File " << file;
+  oss << "  at Line " << line <<".\n";
+  oss << "Reason : " << reason << "\n";
+  
+  std::string message = oss.str();
+
+  Rcpp::stop(message);
+
+};
 
 class MyException : public std::exception {
 
@@ -75,12 +94,17 @@ void R_Interface_Error_Handler(const T & ex) {
   Rf_error("R error\n");
 }
 
-static inline void check_interrupt_impl(void* /*dummy*/) {
- R_CheckUserInterrupt();
-}
+//static inline void check_interrupt_impl(void* /*dummy*/) {
+// R_CheckUserInterrupt();
+//}
 
-inline bool check_interrupt() {
-  return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE);
+// inline bool check_interrupt() {
+//     return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE);
+// }
+
+inline void check_interrupt() {
+  //  TRUST_COUT << "interrupting.\n";
+  Rcpp::checkUserInterrupt();
 }
 
 
@@ -90,22 +114,6 @@ template<typename T>
 bool my_finite(const T& x) {
   return( (std::abs(x) <= __DBL_MAX__ ) && ( x == x ) );
 }
-
-
-
-#define BEGIN_R_INTERFACE try {
-
-  //
-
-#define END_R_INTERFACE  } catch (  const MyException& ex) { \
-       ::Rf_error(ex.what());			\
-  } catch( const std::exception& __ex__ ) {		\
-          forward_exception_to_r( __ex__ );		\
-       } catch(...) {				\
-    TRUST_COUT << "Unknown error\n";				\
-    ::Rf_error( "c++ exception (unknown reason)" );	\
-  }  \
-  return R_NilValue;
 
 
 

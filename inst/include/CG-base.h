@@ -19,6 +19,8 @@
 #include <stdexcept>
 #include <string>
 
+// #include <unistd.h>
+
 #include "common_R.hpp"
 
 #ifndef REPORT_HEADER_FREQ
@@ -225,8 +227,13 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 {
 
     if ( (function_scale_factor==0) || !my_finite(function_scale_factor) ) {
-	throw MyException("Invalid function.scale.factor",
-			  __FILE__,__LINE__);
+      //	throw MyException("Invalid function.scale.factor",
+      //			  __FILE__,__LINE__);
+
+      throw_exception("Invalid function.scale.factor",
+		      __FILE__,__LINE__);
+
+	
     }
     
     xk = startX; // current x = initial x
@@ -240,7 +247,9 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     func.get_fdf(xk, f, gk); // get initial function value and gradient
 
     if (!my_finite(f)) {
-	throw MyException("Function value at starting point is not finite.",
+      //	throw MyException("Function value at starting point is not finite.",
+      //			  __FILE__, __LINE__);
+	throw_exception("Function value at starting point is not finite.",
 			  __FILE__, __LINE__);
     }
 
@@ -254,8 +263,13 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     r_width = std::max(log10(std::abs(rad)),1. ) + report_precision + 5;
 
     if (!my_finite(nrm_gk)) {
-	throw MyException("Norm of gradient at starting point is not finite",
-			  __FILE__,__LINE__); 
+      //	throw MyException("Norm of gradient at starting point is not finite",
+      //			  __FILE__,__LINE__);
+	throw_exception("Function value at starting point is not finite.",
+			  __FILE__, __LINE__);
+
+
+	
     }
     
     // allocate workspace for trust region iteration
@@ -532,9 +546,14 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
 	{
 	    iter++;
 
-	    if (check_interrupt()) {
-		throw MyException("Interrupt detected",__FILE__,__LINE__);
-	    }
+	    check_interrupt();
+	    
+	    /* 
+	       if (check_interrupt()) { 
+	       throw MyException("Interrupt detected",
+	       __FILE__,__LINE__); 
+	       }
+	    */
 
 	    status = update_one_step();
 
@@ -552,6 +571,7 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
 		status = SUCCESS; // successful convergence of algorithm
 	    }
 
+	    //    usleep(5000);
 	    if (iter >= maxit) {
 		status = EMAXITER;
 	    }
