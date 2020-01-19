@@ -23,10 +23,6 @@
 
 #include "common_R.hpp"
 
-#ifndef REPORT_HEADER_FREQ
-#define REPORT_HEADER_FREQ 25
-#endif
-
 using Eigen::Matrix;
 using Eigen::MatrixBase;
 using Eigen::Dynamic;
@@ -57,6 +53,7 @@ public:
 		  int,
 		  const int &,
 		  const int &,
+		  const int &,
 		  const double &,
 		  const double &,
 		  const double &,
@@ -80,6 +77,7 @@ protected:
     const double & prec;
     const int & report_freq;
     int  report_level;
+    const int & header_freq;
     const int & report_precision;
     const int & maxit;
     const double & contract_factor;
@@ -112,7 +110,7 @@ protected:
     double try_f, gs;
     double nrm_gk, ared, pred, sBs, ap, nrm_sk_scaled;
     int i, j;
-    int header_freq, page_count, f_width, g_width, r_width;
+    int page_count, f_width, g_width, r_width;
 
     int num_CG_iters;
     std::string CG_stop_reason;
@@ -199,6 +197,7 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 		const double & prec_,
 		const int & report_freq_,
 		int report_level_,
+		const int & header_freq_,
 		const int & report_precision_,
 		const int & maxit_,
 		const double & contract_factor_,
@@ -211,10 +210,11 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 		const int & precond_ID_,
 		const int & trust_iter_
 		) :
-    func(func_), startX(startX_),
+  func(func_), startX(startX_),
     rad(rad_), min_rad(min_rad_),
     tol(tol_), prec(prec_),
     report_freq(report_freq_), report_level(report_level_),
+    header_freq(header_freq_),
     report_precision(report_precision_), maxit(maxit_),
     contract_factor(contract_factor_), expand_factor(expand_factor_),
     contract_threshold(contract_threshold_),
@@ -281,8 +281,7 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     yj.setZero(nvars);
     wd.resize(nvars);
     wz.resize(nvars);
-
-    header_freq = REPORT_HEADER_FREQ;
+  
     page_count = header_freq;
 
 } // end constructor

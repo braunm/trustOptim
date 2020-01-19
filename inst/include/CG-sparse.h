@@ -165,6 +165,7 @@ public:
 		    const double & prec_,
 		    const int & report_freq_,
 		    const int  report_level_,
+		    const int & header_freq_,
 		    const int & report_precision_,
 		    const int & maxit_,
 		    const double & contract_factor_,
@@ -177,7 +178,7 @@ public:
 		    const int & precond_ID_,
 		    const int & trust_iter_) :
 	BaseType(func_, startX_, rad_, min_rad_, tol_, prec_, report_freq_,
-		 report_level_, report_precision_, maxit_, contract_factor_,
+		 report_level_, header_freq_, report_precision_, maxit_, contract_factor_,
 		 expand_factor_, contract_threshold_, expand_threshold_rad_,
 		 expand_threshold_ap_, function_scale_factor_,
 		 precond_refresh_freq_, precond_ID_, trust_iter_),

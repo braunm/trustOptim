@@ -56,6 +56,7 @@ List sparseTR(NumericVector start,
     const double prec = as<double>(control["prec"]);
     const int report_freq = as<int>(control["report.freq"]);
     const int report_level = as<int>(control["report.level"]);
+    const int header_freq = as<int>(control["report.header.freq"]);
     const int report_precision = as<int>(control["report.precision"]);
     const int maxit = as<int>(control["maxit"]);
     const double contract_factor = as<double>(control["contract.factor"]);
@@ -78,7 +79,7 @@ List sparseTR(NumericVector start,
   
     Trust_CG_Sparse<Map<VectorXd>, RfuncHess,optHessType, optPrecondType> 
 	opt(func, startX, rad, min_rad, tol, prec,
-	    report_freq, report_level, report_precision,
+	    report_freq, report_level, header_freq, report_precision,
 	    maxit, contract_factor, expand_factor,
 	    contract_threshold, expand_threshold_rad,
 	    expand_threshold_ap, function_scale_factor,
@@ -140,6 +141,7 @@ List  quasiTR(NumericVector start,
   const double prec = as<double>(control["prec"]);
   const int report_freq = as<int>(control["report.freq"]);
   const int report_level = as<int>(control["report.level"]);
+  const int header_freq = as<int>(control["report.header.freq"]);
   const int report_precision = as<int>(control["report.precision"]);
   const int maxit = as<int>(control["maxit"]);
   const double contract_factor = as<double>(control["contract.factor"]);
@@ -172,6 +174,7 @@ List  quasiTR(NumericVector start,
 						      startX, rad, min_rad, tol,
 						      prec, report_freq,
 						      report_level,
+						      header_freq,
 						      report_precision,
 						      maxit, contract_factor,
 						      expand_factor,
