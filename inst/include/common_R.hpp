@@ -22,15 +22,12 @@
 #include <RcppEigen.h>
 #include <R_ext/Utils.h>
 #include <iostream>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
 #include <string>
 #include <cstring>
 
 
-void throw_exception(//const std::string extype,
-		     const std::string reason,
+void throw_exception(const std::string reason,
 		     const std::string file,
 		     const int line)
 {
@@ -47,63 +44,9 @@ void throw_exception(//const std::string extype,
 
 };
 
-class MyException : public std::exception {
 
-public:
-
-  const std::string reason;
-  const std::string file;
-  const int line;
-  
-  std::string message;
-  
-
- MyException(const std::string reason_,
-	     const std::string file_,
-	      const int line_) :
-    reason(reason_), file(file_), line(line_)
-  {
-    
-    std::ostringstream oss;
-	
-    oss << "\nException thrown from File " << file;
-    oss << "  at Line " << line <<".\n";
-    oss << "Reason : " << reason << "\n";
-	
-    message = oss.str();
-
-  }
-
-  virtual ~MyException() throw() {};
-  
-  virtual const char* what() const throw()
-  {
-    return message.c_str();
-  }
-
-  void print_message(){
-    TRUST_COUT << message << std::endl;
-  }
-};
-
-
-template<typename T>
-void R_Interface_Error_Handler(const T & ex) {
-  // takes exception object and does R-friendly things to it
-  ex.print_message();
-  Rf_error("R error\n");
-}
-
-//static inline void check_interrupt_impl(void* /*dummy*/) {
-// R_CheckUserInterrupt();
-//}
-
-// inline bool check_interrupt() {
-//     return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE);
-// }
 
 inline void check_interrupt() {
-  //  TRUST_COUT << "interrupting.\n";
   Rcpp::checkUserInterrupt();
 }
 

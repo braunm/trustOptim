@@ -6,6 +6,7 @@ VERSION 0.8.7 (January 19, 2020)
 - Changes to status reporting by iteration:
     - Made report.header.freq a user argument (was previously hard-coded in C++ code at 25).
 	- Suppress start and end messages when report.level = 0.
+- Now using Rcpp exception handler and interrupt check.
 
 VERSION 0.8.6.2 (March 26, 2018)
 
