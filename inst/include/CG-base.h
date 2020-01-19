@@ -539,8 +539,9 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
     using std::endl;
     iter = 0;
     status = CONTINUE;
-    TRUST_COUT << "Beginning optimization\n";
- 
+    if (report_level > 0) {
+      TRUST_COUT << "Beginning optimization\n";
+    }
     do
 	{
 	    iter++;
@@ -591,11 +592,13 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
 	    if (status == CONTRACT) status = CONTINUE;      
 	}
     while (status==CONTINUE);
-  
-    TRUST_COUT << "\nIteration has terminated\n";
-    report_level = 2;
-    report_state(iter);
-    TRUST_COUT << endl;
+
+    if (report_level > 0) {
+      TRUST_COUT << "\nIteration has terminated\n";
+      report_level = 2;
+      report_state(iter);
+      TRUST_COUT << endl;
+    }
     
     return status;
 }

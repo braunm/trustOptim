@@ -59,7 +59,8 @@ test_that("Rosenbrock", {
                             control=list(
                                 preconditioner=meth$precond,
                                 report.freq=5L,
-                                maxit=5000L
+                                maxit=5000L,
+                                report.level=0
                             )
                             )
 
