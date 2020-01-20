@@ -2,7 +2,7 @@
 // common_R.hpp -- this file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
 //
-// Copyright (C) 2013-2015 Michael Braun
+// Copyright (C) 2013-2020 Michael Braun
 //
 // This Source Code Form is subject to the license terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -16,11 +16,8 @@
 #define TRUST_COUT Rcpp::Rcout
 #endif
 
-// #define ERROR_HANDLER R_Interface_Error_Handler
-
 #include <Rcpp.h>
 #include <RcppEigen.h>
-#include <R_ext/Utils.h>
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -44,12 +41,9 @@ void throw_exception(const std::string reason,
 
 };
 
-
-
 inline void check_interrupt() {
   Rcpp::checkUserInterrupt();
 }
-
 
 inline bool my_ret_bool(bool x) {return(x);}
 
