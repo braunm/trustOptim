@@ -24,4 +24,4 @@ Copyright: (c) 2015-2020 Michael Braun
 Encoding: UTF-8
 VignetteBuilder: knitr
 SystemRequirements: C++11
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
