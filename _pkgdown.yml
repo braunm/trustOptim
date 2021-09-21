@@ -1,0 +1,7 @@
+reference:
+  - title: "Running the optimizer"
+  - contents:
+      - trust.optim
+  - title: "Functions and data used in the vignettes and examples"
+  - contents:
+      - starts_with("binary")
