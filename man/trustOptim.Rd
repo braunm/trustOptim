@@ -3,7 +3,6 @@
 \docType{package}
 \name{trustOptim}
 \alias{trustOptim}
-\alias{trustOptim-package}
 \title{Trust-region optimization}
 \description{
 Nonlinear optimizers using trust regions, with methods

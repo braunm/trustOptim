@@ -2,7 +2,7 @@
 // This file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
 //
-// Copyright (C) 2014 Michael Braun
+// Copyright (C) 2014-2020 Michael Braun
 //
 // This Source Code Form is subject to the license terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -46,78 +46,80 @@ List sparseTR(NumericVector start,
   typedef SimplicialLLT<optHessType> optPrecondType; 
 
   int nvars = start.size();
-  if (nvars<=0) throw MyException("Number of variables (starting values) must be positive\n",__FILE__, __LINE__);
+
+  if (nvars<=0) {
+    throw_exception("Number of variables (starting values) must be positive\n",
+		    __FILE__, __LINE__);
+  }
   
-    // Control parameters for optimizer
+  // Control parameters for optimizer
+  
+  double rad = as<double>(control["start.trust.radius"]);
+  const double min_rad = as<double>(control["stop.trust.radius"]);
+  const double tol = as<double>(control["cg.tol"]);
+  const double prec = as<double>(control["prec"]);
+  const int report_freq = as<int>(control["report.freq"]);
+  const int report_level = as<int>(control["report.level"]);
+  const int header_freq = as<int>(control["report.header.freq"]);
+  const int report_precision = as<int>(control["report.precision"]);
+  const int maxit = as<int>(control["maxit"]);
+  const double contract_factor = as<double>(control["contract.factor"]);
+  const double expand_factor = as<double>(control["expand.factor"]);
+  const double contract_threshold = as<double>(control["contract.threshold"]);
+  const double expand_threshold_rad = as<double>(control["expand.threshold.radius"]);
+  const double expand_threshold_ap = as<double>(control["expand.threshold.ap"]);
+  const double function_scale_factor = as<double>(control["function.scale.factor"]);
+  const int precond_refresh_freq = as<int>(control["precond.refresh.freq"]);
+  const int precond_ID = as<int>(control["preconditioner"]);
+  const int trust_iter = as<int>(control["trust.iter"]);
 
-    double rad = as<double>(control["start.trust.radius"]);
-    const double min_rad = as<double>(control["stop.trust.radius"]);
-    const double tol = as<double>(control["cg.tol"]);
-    const double prec = as<double>(control["prec"]);
-    const int report_freq = as<int>(control["report.freq"]);
-    const int report_level = as<int>(control["report.level"]);
-    const int report_precision = as<int>(control["report.precision"]);
-    const int maxit = as<int>(control["maxit"]);
-    const double contract_factor = as<double>(control["contract.factor"]);
-    const double expand_factor = as<double>(control["expand.factor"]);
-    const double contract_threshold = as<double>(control["contract.threshold"]);
-    const double expand_threshold_rad = as<double>(control["expand.threshold.radius"]);
-    const double expand_threshold_ap = as<double>(control["expand.threshold.ap"]);
-    const double function_scale_factor = as<double>(control["function.scale.factor"]);
-    const int precond_refresh_freq = as<int>(control["precond.refresh.freq"]);
-    const int precond_ID = as<int>(control["preconditioner"]);
-    const int trust_iter = as<int>(control["trust.iter"]);
-
-    Map<VectorXd> startX(start.begin(),nvars); 
+  Map<VectorXd> startX(start.begin(),nvars); 
      
-    Rcpp::S4 sh_  = hs(startX);
-    Map<SparseMatrix<double> > sh = Rcpp::as<Map<SparseMatrix<double>>>(sh_);
-    int nnz = (sh.nonZeros() + nvars)/2;
+  Rcpp::S4 sh_  = hs(startX);
+  Map<SparseMatrix<double> > sh = Rcpp::as<Map<SparseMatrix<double>>>(sh_);
+  int nnz = (sh.nonZeros() + nvars)/2;
 
-    RfuncHess func(nvars, nnz, fn, gr, hs);
+  RfuncHess func(nvars, nnz, fn, gr, hs);
   
-    Trust_CG_Sparse<Map<VectorXd>, RfuncHess,optHessType, optPrecondType> 
-	opt(func, startX, rad, min_rad, tol, prec,
-	    report_freq, report_level, report_precision,
-	    maxit, contract_factor, expand_factor,
-	    contract_threshold, expand_threshold_rad,
-	    expand_threshold_ap, function_scale_factor,
-	    precond_refresh_freq, precond_ID, trust_iter);
+  Trust_CG_Sparse<Map<VectorXd>, RfuncHess,optHessType, optPrecondType> 
+    opt(func, startX, rad, min_rad, tol, prec,
+	report_freq, report_level, header_freq, report_precision,
+	maxit, contract_factor, expand_factor,
+	contract_threshold, expand_threshold_rad,
+	expand_threshold_ap, function_scale_factor,
+	precond_refresh_freq, precond_ID, trust_iter);
 
   
-    opt.run();
+  opt.run();
 
-    // collect results and return
+  // collect results and return
 
-    VectorXd P(nvars);
-    VectorXd grad(nvars);
-    optHessType hess(nvars,nvars);
-    hess.reserve(nnz);
+  VectorXd P(nvars);
+  VectorXd grad(nvars);
+  optHessType hess(nvars,nvars);
+  hess.reserve(nnz);
 
-    double fval, radius;
-    int iterations;
-    MB_Status status;
+  double fval, radius;
+  int iterations;
+  MB_Status status;
 
-    status = opt.get_current_state(P, fval, grad, hess, iterations, radius);
+  status = opt.get_current_state(P, fval, grad, hess, iterations, radius);
 
-    List res;
-    res = List::create(Rcpp::Named("fval") = Rcpp::wrap(fval),
-		       Rcpp::Named("solution") = Rcpp::wrap(P),
-		       Rcpp::Named("gradient") = Rcpp::wrap(grad),	
-		       Rcpp::Named("hessian") = Rcpp::wrap(hess),
-		       Rcpp::Named("iterations") = Rcpp::wrap(iterations),
-		       Rcpp::Named("status") = Rcpp::wrap((std::string) MB_strerror(status)),
-		       Rcpp::Named("trust.radius") = Rcpp::wrap(radius),
-		       Rcpp::Named("nnz") = Rcpp::wrap(nnz),
-		       Rcpp::Named("method") = Rcpp::wrap("Sparse")
-		       );
+  List res;
+  res = List::create(Rcpp::Named("fval") = Rcpp::wrap(fval),
+		     Rcpp::Named("solution") = Rcpp::wrap(P),
+		     Rcpp::Named("gradient") = Rcpp::wrap(grad),	
+		     Rcpp::Named("hessian") = Rcpp::wrap(hess),
+		     Rcpp::Named("iterations") = Rcpp::wrap(iterations),
+		     Rcpp::Named("status") = Rcpp::wrap((std::string) MB_strerror(status)),
+		     Rcpp::Named("trust.radius") = Rcpp::wrap(radius),
+		     Rcpp::Named("nnz") = Rcpp::wrap(nnz),
+		     Rcpp::Named("method") = Rcpp::wrap("Sparse")
+		     );
    
-    return(res);
+  return(res);
   
-	}
-
-
-
+}
 
 //[[Rcpp::export]]
 List  quasiTR(NumericVector start,
@@ -140,6 +142,7 @@ List  quasiTR(NumericVector start,
   const double prec = as<double>(control["prec"]);
   const int report_freq = as<int>(control["report.freq"]);
   const int report_level = as<int>(control["report.level"]);
+  const int header_freq = as<int>(control["report.header.freq"]);
   const int report_precision = as<int>(control["report.precision"]);
   const int maxit = as<int>(control["maxit"]);
   const double contract_factor = as<double>(control["contract.factor"]);
@@ -172,6 +175,7 @@ List  quasiTR(NumericVector start,
 						      startX, rad, min_rad, tol,
 						      prec, report_freq,
 						      report_level,
+						      header_freq,
 						      report_precision,
 						      maxit, contract_factor,
 						      expand_factor,

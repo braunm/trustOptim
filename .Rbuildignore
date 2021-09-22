@@ -15,3 +15,8 @@ data-raw/*
 README\.R
 ^NEWS\.md$
 ^cran-comments\.md$
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

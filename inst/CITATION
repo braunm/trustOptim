@@ -8,7 +8,7 @@ citEntry(entry = "Article",
   volume       = "60",
   number       = "4",
   pages        = "1--16",
-  url          = "http://www.jstatsoft.org/v60/i04/",
+  url          = "https://www.jstatsoft.org/v60/i04/",
 
   textVersion  =
   paste("Michael Braun (2014).",
@@ -16,4 +16,3 @@ citEntry(entry = "Article",
         "Journal of Statistical Software, 60(4), 1-16.",
         "URL http://www.jstatsoft.org/v60/i04/.")
 )
-

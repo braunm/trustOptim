@@ -1,0 +1,11 @@
+pandoc: '2.13'
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  trustOptim-demo: trustOptim-demo.html
+  trustOptim-quick: trustOptim-quick.html
+last_built: 2021-09-22T04:03Z
+urls:
+  reference: https://braunm.github.io/trustOptim/reference
+  article: https://braunm.github.io/trustOptim/articles
+

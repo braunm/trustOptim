@@ -67,7 +67,7 @@ public:
   Trust_CG_Optimizer(TFunc&, const MatrixBase<TP>&,	
 		     const double &, const double &, const double &,
 		     const double &, const int &, const int , const int &,
-		     const int &, const double &,
+		     const int &, const int &, const double &,
 		     const double &, const double &,
 		     const double &, const double &, const double &,
 		     const int &, const int &, const int &, const int &);
@@ -91,6 +91,7 @@ template<typename TP, typename TFunc, typename THess, typename TPreLLt>
 								    const double & prec_,
 								    const int & report_freq_,
 								    const int  report_level_,
+								    const int & header_freq_,
 								    const int & report_precision_,
 								    const int & maxit_,
 								    const double & contract_factor_,
@@ -104,7 +105,7 @@ template<typename TP, typename TFunc, typename THess, typename TPreLLt>
 								    const int & quasi_newton_method_,
 								    const int & trust_iter_) :
   Trust_CG_Base<TP, TFunc, THess, TPreLLt>(func_, startX_, rad_, min_rad_, tol_, prec_, report_freq_,
-					   report_level_,
+					   report_level_, header_freq_,
 					   report_precision_, maxit_, contract_factor_,
 					   expand_factor_, contract_threshold_,
 					   expand_threshold_rad_, expand_threshold_ap_,

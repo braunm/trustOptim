@@ -47,7 +47,9 @@ public:
     Eigen::MatrixBase<Tpars>& P = const_cast<Eigen::MatrixBase<Tpars>& >(P_);
 
     if (P.size()!=nvars) {
-      throw MyException("Incorrect number of parameters\n",
+      //      throw MyException("Incorrect number of parameters\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect number of parameters\n",
 			__FILE__, __LINE__);
     }
  
@@ -71,13 +73,24 @@ public:
     Eigen::MatrixBase<Tgrad> & df = const_cast<Eigen::MatrixBase<Tgrad>& >(df_);
   
     if (P.size()!=nvars){
-      throw MyException("Incorrect number of parameters\n",
+      //      throw MyException("Incorrect number of parameters\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect number of parameters\n",
 			__FILE__, __LINE__);
+
+
+      
     }
 
     if (df.size()!=nvars){
-      throw MyException("Incorrect gradient length\n",
+      
+      //      throw MyException("Incorrect gradient length\n",
+      //		__FILE__, __LINE__);
+      throw_exception("Incorrect gradient length\n",
 			__FILE__, __LINE__);
+
+
+      
     }
   
     NumericVector pars(P.derived().data(),

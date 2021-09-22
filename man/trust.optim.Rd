@@ -4,8 +4,15 @@
 \alias{trust.optim}
 \title{Nonlinear optimizers using trust regions.}
 \usage{
-trust.optim(x, fn, gr, hs = NULL, method = c("SR1", "BFGS", "Sparse"),
-  control = list(), ...)
+trust.optim(
+  x,
+  fn,
+  gr,
+  hs = NULL,
+  method = c("SR1", "BFGS", "Sparse"),
+  control = list(),
+  ...
+)
 }
 \arguments{
 \item{x}{A numeric vector of starting values for the optimizer.}
@@ -16,16 +23,10 @@ Note that the optimizer will \emph{minimize} \code{fn} (see
 function.scale.factor under control)}
 
 \item{gr}{An R function that takes x as its first argument.  Returns a
-numeric vector that is the gradient of \code{fn} at \code{x}. The
-length of the gradient must be the same as the length of \code{x}.
-The user must supply this function.  If an analytic gradient is not
-available, and the method is \code{SR1} or \code{BFGS}, the user should consider a
-numerical approximation using finite differencing (see the
-numDeriv package).  Do not use a finite-differenced gradient with
-the \code{Sparse} method.  That will cause a world of hurt.}
+numeric vector that is the gradient of \code{fn} at \code{x}. The length of the gradient must be the same as the length of \code{x}.  The user must supply this function.  If an analytic gradient is not available, and the method is \code{SR1} or \code{BFGS}, the user should consider a numerical approximation using finite differencing (see the numDeriv package).  Do not use a finite-differenced gradient with the \code{Sparse} method.  That will cause a world of hurt.}
 
 \item{hs}{An R function that takes x as its first argument.
-Returns a Hessian matrix object of class \code{dgCMatrix} (see the \pkg{Matrix} package).
+It returns a Hessian matrix object of class \code{dgCMatrix} (see the \pkg{Matrix} package).
 This function is called only if the selected method is \code{Sparse}.}
 
 \item{method}{Valid arguments are \code{SR1},\code{BFGS},and \code{Sparse}.}
@@ -64,33 +65,33 @@ The control list should include the following parameters.
 \item{stop.trust.radius}{Minimum radius of trust region.  Algorithm will terminate if radius is below this value.  This is because it may not be possible to get the norm of the gradient smaller than prec, and this is another way to get the algorithm to stop.}
 \item{cg.tol}{tolerance for the conjugate gradient algorithm that is used for the trust region subproblem.  Set it to something very small.  Default is sqrt(.Machine$double.eps)}
 \item{prec}{Precision for how close the norm of the gradient at the
-    solution should be to zero, before the algorithm halts.  It is possible that the algorithm
-    will not get that far, so it will also stop when the radius of the
-    trust region is smaller thanstop.trust.radius.  If the trust
-    region radius collapses, but the norm of the gradient really isn't
-    close to zero, then something terrible has happened.}
+solution should be to zero, before the algorithm halts.  It is possible that the algorithm
+will not get that far, so it will also stop when the radius of the
+trust region is smaller thanstop.trust.radius.  If the trust
+region radius collapses, but the norm of the gradient really isn't
+close to zero, then something terrible has happened.}
 \item{report.freq}{An integer. The frequency at which the algorithm
-  will display the current iteration number or function value, among
-  other things (see \code{report.level}).  Defaults to 1.}
+will display the current iteration number or function value, among
+other things (see \code{report.level}).  Defaults to 1.}
 \item{report.level}{The amount of detail in each report.  Defaults to 2.}
 \item{report.precision}{The number of significant digits used in each
-    report. Defaults to 5.}
+report. Defaults to 5.}
+\item{report.header.freq}{The number of lines of iterations before the report column headers are reprinted.  Defaults to 25.}
 \item{maxit}{Maximum number of iterations.  Defaults to 100.}
-\item{contract.factor}{When the algorithm decides to shrink the trust
-    region, it will multiply the trust radius by this factor. Defaults to 0.5.}
+\item{contract.factor}{When the algorithm decides to shrink the trust region, it will multiply the trust radius by this factor. Defaults to 0.5.}
 \item{expand.factor}{When the algorithm decides to expand the trust
-    region, it will multiply the algorithm by this factor. Defaults to 3.}
+region, it will multiply the algorithm by this factor. Defaults to 3.}
 \item{contract.threshold}{The algorithm with accept a proposed move if the ratio of the actual improvement in the objective function, to the predicted improvement from the trust region subproblem, is greater than this amount.  Otherwise, the trust region will contract.  Default is 0.25.}
 \item{expand.threshold.ap}{First criterion to determine if the trust region should expand.  If the ratio of the actual and proposed improvements in the objective function is less than this factor, the algorithm will consider expanding the trust region.  See \code{expand.threshold.radius}. Default is 0.8.}
-\item{expand.threshold.radius}{If the ratio of the actual and proposed improvement in the objective function is less than \code{expand.threshold.ap}, then, if the normed distance of the proposed move is greater than  \code{expand.threshold.radius}, times the current trust region radius, the trust region will expand.  Default is 0.8.}
+\item{expand.threshold.radius}{If the ratio of the actual and proposed improvement in the objective function is less than \code{expand.threshold.ap}, then, if the normed distance of the proposed move is greater than \code{expand.threshold.radius}, times the current trust region radius, the trust region will expand.  Default is 0.8.}
 \item{function.scale.factor}{The algorithm will minimize \code{fn} times this
-    factor. If you want to maximize \code{fn}, this value should be negative
-    (usually -1).  Default is 1.}
+factor. If you want to maximize \code{fn}, this value should be negative
+(usually -1).  Default is 1.}
 \item{precond.refresh.freq}{Frequency at which the preconditioner
-    for the conjugate gradiate estimation of the trust region
-    subproblem is reestimated.  Preconditioners can help the convergence properties of the algorithm.  Default is 1.}
+for the conjugate gradiate estimation of the trust region
+subproblem is reestimated.  Preconditioners can help the convergence properties of the algorithm.  Default is 1.}
 \item{preconditioner}{ID for choice of preconditioner.  0 is the
-    identity matrix (default), For the \code{Sparse} method, 1 is a modified Cholesky preconditioner. For the \code{BFGS} method, 1 is the full Cholesky decomposition.  If you select 1 for the \code{SR1} method, the algorithm will use the identity preconditioner instead.}
+identity matrix (default), For the \code{Sparse} method, 1 is a modified Cholesky preconditioner. For the \code{BFGS} method, 1 is the full Cholesky decomposition.  If you select 1 for the \code{SR1} method, the algorithm will use the identity preconditioner instead.}
 \item{trust.iter}{Maximum number of conjugate gradient iterations to run when solving the trust region subproblem.  A higher number will lead to more accurate solutions to the subproblem, but may also lead to longer run times. Defaults to 2000.}
 }
 }
@@ -140,7 +141,7 @@ k <- NROW(binary$X)
 start <- rep(0,(N+1)*k)
 priors <- list(inv.Sigma = diag(k), inv.Omega = diag(k))
 opt <- trust.optim(start, fn=binary.f,
-                  gr = binary.grad,  
+                  gr = binary.grad,
                   hs = binary.hess,
                   method = "Sparse",
                   control = list(

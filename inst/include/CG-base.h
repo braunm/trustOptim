@@ -3,7 +3,7 @@
 // This file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
 //
-// Copyright (C) 2013 Michael Braun
+// Copyright (C) 2013-2020 Michael Braun
 //
 // This Source Code Form is subject to the license terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -19,11 +19,9 @@
 #include <stdexcept>
 #include <string>
 
-#include "common_R.hpp"
+// #include <unistd.h>
 
-#ifndef REPORT_HEADER_FREQ
-#define REPORT_HEADER_FREQ 25
-#endif
+#include "common_R.hpp"
 
 using Eigen::Matrix;
 using Eigen::MatrixBase;
@@ -55,6 +53,7 @@ public:
 		  int,
 		  const int &,
 		  const int &,
+		  const int &,
 		  const double &,
 		  const double &,
 		  const double &,
@@ -78,6 +77,7 @@ protected:
     const double & prec;
     const int & report_freq;
     int  report_level;
+    const int & header_freq;
     const int & report_precision;
     const int & maxit;
     const double & contract_factor;
@@ -110,7 +110,7 @@ protected:
     double try_f, gs;
     double nrm_gk, ared, pred, sBs, ap, nrm_sk_scaled;
     int i, j;
-    int header_freq, page_count, f_width, g_width, r_width;
+    int page_count, f_width, g_width, r_width;
 
     int num_CG_iters;
     std::string CG_stop_reason;
@@ -197,6 +197,7 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 		const double & prec_,
 		const int & report_freq_,
 		int report_level_,
+		const int & header_freq_,
 		const int & report_precision_,
 		const int & maxit_,
 		const double & contract_factor_,
@@ -209,10 +210,11 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 		const int & precond_ID_,
 		const int & trust_iter_
 		) :
-    func(func_), startX(startX_),
+  func(func_), startX(startX_),
     rad(rad_), min_rad(min_rad_),
     tol(tol_), prec(prec_),
     report_freq(report_freq_), report_level(report_level_),
+    header_freq(header_freq_),
     report_precision(report_precision_), maxit(maxit_),
     contract_factor(contract_factor_), expand_factor(expand_factor_),
     contract_threshold(contract_threshold_),
@@ -225,8 +227,13 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
 {
 
     if ( (function_scale_factor==0) || !my_finite(function_scale_factor) ) {
-	throw MyException("Invalid function.scale.factor",
-			  __FILE__,__LINE__);
+      //	throw MyException("Invalid function.scale.factor",
+      //			  __FILE__,__LINE__);
+
+      throw_exception("Invalid function.scale.factor",
+		      __FILE__,__LINE__);
+
+	
     }
     
     xk = startX; // current x = initial x
@@ -240,7 +247,9 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     func.get_fdf(xk, f, gk); // get initial function value and gradient
 
     if (!my_finite(f)) {
-	throw MyException("Function value at starting point is not finite.",
+      //	throw MyException("Function value at starting point is not finite.",
+      //			  __FILE__, __LINE__);
+	throw_exception("Function value at starting point is not finite.",
 			  __FILE__, __LINE__);
     }
 
@@ -254,8 +263,13 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     r_width = std::max(log10(std::abs(rad)),1. ) + report_precision + 5;
 
     if (!my_finite(nrm_gk)) {
-	throw MyException("Norm of gradient at starting point is not finite",
-			  __FILE__,__LINE__); 
+      //	throw MyException("Norm of gradient at starting point is not finite",
+      //			  __FILE__,__LINE__);
+	throw_exception("Function value at starting point is not finite.",
+			  __FILE__, __LINE__);
+
+
+	
     }
     
     // allocate workspace for trust region iteration
@@ -267,8 +281,7 @@ Trust_CG_Base<TP, TFunc, THess, TPreLLt>
     yj.setZero(nvars);
     wd.resize(nvars);
     wz.resize(nvars);
-
-    header_freq = REPORT_HEADER_FREQ;
+  
     page_count = header_freq;
 
 } // end constructor
@@ -526,15 +539,21 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
     using std::endl;
     iter = 0;
     status = CONTINUE;
-    TRUST_COUT << "Beginning optimization\n";
- 
+    if (report_level > 0) {
+      TRUST_COUT << "Beginning optimization\n";
+    }
     do
 	{
 	    iter++;
 
-	    if (check_interrupt()) {
-		throw MyException("Interrupt detected",__FILE__,__LINE__);
-	    }
+	    check_interrupt();
+	    
+	    /* 
+	       if (check_interrupt()) { 
+	       throw MyException("Interrupt detected",
+	       __FILE__,__LINE__); 
+	       }
+	    */
 
 	    status = update_one_step();
 
@@ -552,6 +571,7 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
 		status = SUCCESS; // successful convergence of algorithm
 	    }
 
+	    //    usleep(5000);
 	    if (iter >= maxit) {
 		status = EMAXITER;
 	    }
@@ -572,11 +592,13 @@ int Trust_CG_Base<TP, TFunc, THess, TPreLLt>::run() {
 	    if (status == CONTRACT) status = CONTINUE;      
 	}
     while (status==CONTINUE);
-  
-    TRUST_COUT << "\nIteration has terminated\n";
-    report_level = 2;
-    report_state(iter);
-    TRUST_COUT << endl;
+
+    if (report_level > 0) {
+      TRUST_COUT << "\nIteration has terminated\n";
+      report_level = 2;
+      report_state(iter);
+      TRUST_COUT << endl;
+    }
     
     return status;
 }

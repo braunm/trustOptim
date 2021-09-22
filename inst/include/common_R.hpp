@@ -2,7 +2,7 @@
 // common_R.hpp -- this file is part of trustOptim, a nonlinear optimization package
 // for the R statistical programming platform.
 //
-// Copyright (C) 2013-2015 Michael Braun
+// Copyright (C) 2013-2020 Michael Braun
 //
 // This Source Code Form is subject to the license terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
@@ -16,73 +16,34 @@
 #define TRUST_COUT Rcpp::Rcout
 #endif
 
-#define ERROR_HANDLER R_Interface_Error_Handler
-
 #include <Rcpp.h>
 #include <RcppEigen.h>
-#include <R_ext/Utils.h>
 #include <iostream>
-#include <exception>
-#include <stdexcept>
 #include <algorithm>
 #include <string>
 #include <cstring>
 
-class MyException : public std::exception {
 
-public:
-
-  const std::string reason;
-  const std::string file;
-  const int line;
+void throw_exception(const std::string reason,
+		     const std::string file,
+		     const int line)
+{
   
-  std::string message;
+  std::ostringstream oss;
   
-
- MyException(const std::string reason_,
-	     const std::string file_,
-	      const int line_) :
-    reason(reason_), file(file_), line(line_)
-  {
-    
-    std::ostringstream oss;
-	
-    oss << "\nException thrown from File " << file;
-    oss << "  at Line " << line <<".\n";
-    oss << "Reason : " << reason << "\n";
-	
-    message = oss.str();
-
-  }
-
-  virtual ~MyException() throw() {};
+  oss << "\nException in File " << file;
+  oss << "  at Line " << line <<".\n";
+  oss << "Reason : " << reason << "\n";
   
-  virtual const char* what() const throw()
-  {
-    return message.c_str();
-  }
+  std::string message = oss.str();
 
-  void print_message(){
-    TRUST_COUT << message << std::endl;
-  }
+  Rcpp::stop(message);
+
 };
 
-
-template<typename T>
-void R_Interface_Error_Handler(const T & ex) {
-  // takes exception object and does R-friendly things to it
-  ex.print_message();
-  Rf_error("R error\n");
+inline void check_interrupt() {
+  Rcpp::checkUserInterrupt();
 }
-
-static inline void check_interrupt_impl(void* /*dummy*/) {
- R_CheckUserInterrupt();
-}
-
-inline bool check_interrupt() {
-  return (R_ToplevelExec(check_interrupt_impl, NULL) == FALSE);
-}
-
 
 inline bool my_ret_bool(bool x) {return(x);}
 
@@ -90,22 +51,6 @@ template<typename T>
 bool my_finite(const T& x) {
   return( (std::abs(x) <= __DBL_MAX__ ) && ( x == x ) );
 }
-
-
-
-#define BEGIN_R_INTERFACE try {
-
-  //
-
-#define END_R_INTERFACE  } catch (  const MyException& ex) { \
-       ::Rf_error(ex.what());			\
-  } catch( const std::exception& __ex__ ) {		\
-          forward_exception_to_r( __ex__ );		\
-       } catch(...) {				\
-    TRUST_COUT << "Unknown error\n";				\
-    ::Rf_error( "c++ exception (unknown reason)" );	\
-  }  \
-  return R_NilValue;
 
 
 

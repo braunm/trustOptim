@@ -1,6 +1,17 @@
 
 ## NEWS for trustOptim package
 
+VERSION 0.8.7.1 (September 21, 2021)
+
+- Built a pkgdown site.
+- Changes to various urls and links.
+
+VERSION 0.8.7 (January 19, 2020)
+
+- Changes to status reporting by iteration:
+    - Made report.header.freq a user argument (was previously hard-coded in C++ code at 25).
+	- Suppress start and end messages when report.level = 0.
+- Now using Rcpp exception handler and interrupt check.
 
 VERSION 0.8.6.2 (March 26, 2018)
 
@@ -69,7 +80,7 @@ VERSION 0.8.1 (June 7, 2013)
 
 -  Rewrote update_one_step() in CG-base.h so the gradient is not evaluated if we already know that the trust region will contract.  If the trust region contracts, the algorithm does not move, so the gradient does not need to be recomputed. (Thanks to Gregor Reich for contributing a change to the code).
 
--  For report_level >= 3, the precision of the output of the current radius of the trust region now depends on the report_precision parameter.  Previously, the precision had an upper bound of 2. (Thanks to Gregor Reich for contributing a change to the code). 
+-  For report_level >= 3, the precision of the output of the current radius of the trust region now depends on the report_precision parameter.  Previously, the precision had an upper bound of 2. (Thanks to Gregor Reich for contributing a change to the code).
 -  For the BFGS method, the default preconditioner is now the Cholesky (Hessians are guaranteed to be positive definite).  For SR1 and Sparse, the default preconditioner remains the identity matrix.
 
 -  There is a new vignette, with an added example of a smaller problem with a dense Hessian.  Both the sparse and dense Hessian examples can be run through demo(choice_sparse) and demo(choice_dense).  The code for the examples is in the demo directory.  The code for the objective functions and gradients is in R/demo_funcs.R.
