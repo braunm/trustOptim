@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/spacelab/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -54,6 +54,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJF7FJCCT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XVJF7FJCCT');
+</script>
+
 
   </head>
 
@@ -71,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">trustOptim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6.3</span>
       </span>
     </div>
 
@@ -106,7 +116,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/braunm/trustOptim/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -134,6 +149,19 @@
     <tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-package-overview" class="hasAnchor"><a href="#section-package-overview" class="anchor"></a>Package overview</h2>
+          <p class="section-desc"><p>Overview of trustOptim</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-running-the-optimizer" class="hasAnchor"><a href="#section-running-the-optimizer" class="anchor"></a>Running the optimizer</h2>
           <p class="section-desc"></p>
         </th>
@@ -153,7 +181,7 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-functions-and-data-used-in-the-vignettes-and-examples" class="hasAnchor"><a href="#section-functions-and-data-used-in-the-vignettes-and-examples" class="anchor"></a>Functions and data used in the vignettes and examples</h2>
+          <h2 id="section-data-and-functions-for-examples" class="hasAnchor"><a href="#section-data-and-functions-for-examples" class="anchor"></a>Data and functions for examples</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -189,7 +217,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Michael Braun.</p>
+  <p>Developed by <a href='https://braunm.github.io'>Michael Braun</a>.</p>
 </div>
 
 <div class="pkgdown">

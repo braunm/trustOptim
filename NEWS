@@ -2,6 +2,12 @@
 NEWS for trustOptim package
 
 
+VERSION 0.8.7.1 (September 21, 2021)
+
+- Built a pkgdown site.
+- Changes to various urls and links.
+
+
 VERSION 0.8.7 (January 19, 2020)
 
 - Changes to status reporting by iteration:
@@ -134,4 +140,3 @@ VERSION 0.7.1 (Sept. 27, 2012)
 VERSION 0.7.0
 
 -   Initial upload to CRAN.
-
