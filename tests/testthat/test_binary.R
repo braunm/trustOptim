@@ -36,8 +36,6 @@ test_that("Binary", {
                         data=binary, priors=priors
                         )
 
-
-
     norm_gr <- sqrt(sum(opt0$gradient ^ 2))
     expect_equal(norm_gr, 0,  tolerance=.0005)
     expect_match(opt0$status, "Success")
