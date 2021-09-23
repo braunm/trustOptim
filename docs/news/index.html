@@ -44,6 +44,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,15 @@
 </script>
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,19 +89,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">trustOptim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -139,6 +141,104 @@
       <small>Source: <a href='https://github.com/braunm/trustOptim/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="trustoptim-0872" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.7.2">
+<a href="#trustoptim-0872" class="anchor" aria-hidden="true"></a>trustOptim 0.8.7.2<small> Unreleased </small></h1>
+<ul><li>Built a pkgdown site.</li>
+<li>Changes to various urls and links.</li>
+<li>New API for Matrix 1.3: replaced deprecated giveCsparse arguments with repr.</li>
+</ul></div>
+    <div id="trustoptim-087" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.7">
+<a href="#trustoptim-087" class="anchor" aria-hidden="true"></a>trustOptim 0.8.7<small> Unreleased </small></h1>
+<ul><li>Changes to status reporting by iteration:
+<ul><li>Made report.header.freq a user argument (was previously hard-coded in C++ code at 25).</li>
+<li>Suppress start and end messages when report.level = 0.</li>
+</ul></li>
+<li>Now using Rcpp exception handler and interrupt check.</li>
+</ul></div>
+    <div id="trustoptim-0862" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.6.2">
+<a href="#trustoptim-0862" class="anchor" aria-hidden="true"></a>trustOptim 0.8.6.2<small> 2018-03-27 </small></h1>
+<ul><li>Removed deprecated Matrix package functions rBind and cBind, and replaced them with their rbind and cbind counterparts.</li>
+</ul></div>
+    <div id="trustoptim-0861" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.6.1">
+<a href="#trustoptim-0861" class="anchor" aria-hidden="true"></a>trustOptim 0.8.6.1<small> 2017-10-08 </small></h1>
+<ul><li><p>Modified registration of native routines in src/init.c to be compatible with new Rcpp naming convention.</p></li>
+<li><p>Replaced deprecated MappedSparseMatrix with Map<sparsematrix> for RcppEigen 0.3.3.3.0.</sparsematrix></p></li>
+</ul></div>
+    <div id="trustoptim-086" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.6">
+<a href="#trustoptim-086" class="anchor" aria-hidden="true"></a>trustOptim 0.8.6<small> 2017-04-26 </small></h1>
+<ul><li><p>Add explicit registration of compiled functions, as required for R 3.4.0.</p></li>
+<li><p>Fixed various, Depends, Imports, Suggests, and LinkingTo statements to comply with new CRAN requirements since previous release.</p></li>
+</ul></div>
+    <div id="trustoptim-085" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.5">
+<a href="#trustoptim-085" class="anchor" aria-hidden="true"></a>trustOptim 0.8.5<small> 2015-02-04 </small></h1>
+<ul><li><p>New vignettes that do not depend on sparseHessianFD</p></li>
+<li><p>Removed demos, which are replaced by the vignettes</p></li>
+<li><p>Converted from standard C interface to Rcpp::attributes</p></li>
+<li><p>Added some unit tests, using testthat.</p></li>
+<li><p>Removed demonstration functions that were in .R files, but are now included in the vignettes and unit tests directly.</p></li>
+<li><p>Removed logit.R and vech.R files, which weren’t used at all.</p></li>
+<li><p>Replaced abs with std::abs in C++ code.</p></li>
+<li><p>Added NEWS.md, which can be converted to NEWS via pandoc.</p></li>
+</ul></div>
+    <div id="trustoptim-0841" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.4.1">
+<a href="#trustoptim-0841" class="anchor" aria-hidden="true"></a>trustOptim 0.8.4.1<small> 2014-09-27 </small></h1>
+<ul><li><p>Final version for Journal of Statistical Software, with new CITATION file. Please cite this package if using it in your work.</p></li>
+<li><p>Some minor changes to the vignette, to correspond with the JStatSoft paper.</p></li>
+</ul></div>
+    <div id="trustoptim-084" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.4">
+<a href="#trustoptim-084" class="anchor" aria-hidden="true"></a>trustOptim 0.8.4<small> Unreleased </small></h1>
+<ul><li><p>Now using Roxygen2 for documentation and namespace management.</p></li>
+<li><p>Non-CRAN version for Journal of Statistical Software.</p></li>
+</ul></div>
+    <div id="trustoptim-083" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.3">
+<a href="#trustoptim-083" class="anchor" aria-hidden="true"></a>trustOptim 0.8.3<small> 2013-12-08 </small></h1>
+<ul><li>For log10(x) and sqrt(x), with x being an integer, provide explicit casts from int to double (strict conformance with C++, need to compile on Solaris).</li>
+</ul></div>
+    <div id="trustoptim-082" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.2">
+<a href="#trustoptim-082" class="anchor" aria-hidden="true"></a>trustOptim 0.8.2<small> 2013-11-06 </small></h1>
+<ul><li><p>Minor changes in the demo/choice_sparse.R and demo/choice_dense.R, so the algorithms start closer to the optimal values.</p></li>
+<li><p>Moved vignette code to conform to new CRAN standards.</p></li>
+<li><p>Updated maintainer contact information.</p></li>
+</ul></div>
+    <div id="trustoptim-081" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.1">
+<a href="#trustoptim-081" class="anchor" aria-hidden="true"></a>trustOptim 0.8.1<small> 2013-06-12 </small></h1>
+<ul><li><p>Rewrote update_one_step() in CG-base.h so the gradient is not evaluated if we already know that the trust region will contract. If the trust region contracts, the algorithm does not move, so the gradient does not need to be recomputed. (Thanks to Gregor Reich for contributing a change to the code).</p></li>
+<li><p>For report_level &gt;= 3, the precision of the output of the current radius of the trust region now depends on the report_precision parameter. Previously, the precision had an upper bound of 2. (Thanks to Gregor Reich for contributing a change to the code).</p></li>
+<li><p>For the BFGS method, the default preconditioner is now the Cholesky (Hessians are guaranteed to be positive definite). For SR1 and Sparse, the default preconditioner remains the identity matrix.</p></li>
+<li><p>There is a new vignette, with an added example of a smaller problem with a dense Hessian. Both the sparse and dense Hessian examples can be run through demo(choice_sparse) and demo(choice_dense). The code for the examples is in the demo directory. The code for the objective functions and gradients is in R/demo_funcs.R.</p></li>
+<li><p>New minimum versions for dependencies (Rcpp 0.10.3 and RcppEigen 0.3.1.2.1).</p></li>
+</ul></div>
+    <div id="trustoptim-080" class="section level1">
+<h1 class="page-header" data-toc-text="0.8.0">
+<a href="#trustoptim-080" class="anchor" aria-hidden="true"></a>trustOptim 0.8.0<small> 2012-12-28 </small></h1>
+<ul><li><p>Removed sparseFD method. Instead, use the sparseHessianFD package for similar funcationality.</p></li>
+<li><p>All ACM-licensed code was removed from the package and moved to the sparseHessianFD package.</p></li>
+<li><p>Disabled the diagonal preconditioner, which was segfaulting for some yet-to-be-identified reason. Since it didn’t work much better than no preconditioner at all, it’s no great loss. The modified Cholesky preconditioner remains.</p></li>
+<li><p>In the control list, setting preconditioner to 1 implements the modified Cholesky preconditioner. The value 2 is no longer a valid (and will default to the identity preconditioner).</p></li>
+<li><p>Fixed a bug where the function.scale.factor option defaulted to -1 instead of 1. It now defaults to 1.</p></li>
+</ul></div>
+    <div id="trustoptim-071" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.1">
+<a href="#trustoptim-071" class="anchor" aria-hidden="true"></a>trustOptim 0.7.1<small> 2012-09-27 </small></h1>
+<ul><li><p>Added get.fdfh function to return estimate of sparse Hessian when only the structure is known.</p></li>
+<li><p>Added vignette that describes how to use the package, and compares performance to some other optimizers.</p></li>
+</ul></div>
+    <div id="trustoptim-070" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.0">
+<a href="#trustoptim-070" class="anchor" aria-hidden="true"></a>trustOptim 0.7.0<small> 2012-08-23 </small></h1>
+<ul><li>Initial upload to CRAN.</li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -152,11 +252,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://braunm.github.io'>Michael Braun</a>.</p>
+  <p><p>Developed by <a href="https://braunm.github.io" class="external-link">Michael Braun</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -164,6 +264,8 @@
 
   
 
+
+  
 
   </body>
 </html>

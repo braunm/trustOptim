@@ -1,38 +1,36 @@
 
-## NEWS for trustOptim package
-
-VERSION 0.8.7.1 (September 21, 2021)
+# trustOptim 0.8.7.2
 
 - Built a pkgdown site.
 - Changes to various urls and links.
+- New API for Matrix 1.3: replaced deprecated giveCsparse arguments with repr.
 
-VERSION 0.8.7 (January 19, 2020)
+# trustOptim 0.8.7
 
 - Changes to status reporting by iteration:
     - Made report.header.freq a user argument (was previously hard-coded in C++ code at 25).
 	- Suppress start and end messages when report.level = 0.
 - Now using Rcpp exception handler and interrupt check.
 
-VERSION 0.8.6.2 (March 26, 2018)
+# trustOptim 0.8.6.2
 
 -   Removed deprecated Matrix package functions rBind and cBind, and
     replaced them with their rbind and cbind counterparts.
 
-
-VERSION 0.8.6.1 (October 6, 2017)
+# trustOptim 0.8.6.1
 
 - Modified registration of native routines in src/init.c to be
    compatible with new Rcpp naming convention.
 
 - Replaced deprecated MappedSparseMatrix with Map<SparseMatrix>  for RcppEigen 0.3.3.3.0.
 
-VERSION 0.8.6 (April 18, 2017)
+# trustOptim 0.8.6
 
 - Add explicit registration of compiled functions, as required for R 3.4.0.
 
 - Fixed various, Depends, Imports, Suggests, and LinkingTo statements to comply with new CRAN requirements since previous release.
 
-VERSION 0.8.5 (Jan. 27, 2015)
+# trustOptim 0.8.5
 
 -  New vignettes that do not depend on sparseHessianFD
 
@@ -50,24 +48,24 @@ VERSION 0.8.5 (Jan. 27, 2015)
 
 -  Added NEWS.md, which can be converted to NEWS via pandoc.
 
-VERSION 0.8.4.1 (Sept. 26, 2014)
+# trustOptim 0.8.4.1
 
 -  Final version for Journal of Statistical Software, with new CITATION file.  Please cite this package if using it in your work.
 
 -  Some minor changes to the vignette, to correspond with the JStatSoft paper.
 
-VERSION 0.8.4 (May 28, 2014)
+# trustOptim 0.8.4
 
 -  Now using Roxygen2 for documentation and namespace management.
 
 -  Non-CRAN version for Journal of Statistical Software.
 
 
-VERSION 0.8.3 (December 7, 2013)
+# trustOptim 0.8.3
 
 -  For log10(x) and sqrt(x), with x being an integer, provide explicit casts from int to double (strict conformance with C++, need to compile on Solaris).
 
-VERSION 0.8.2 (November 4, 2013)
+# trustOptim 0.8.2
 
 -  Minor changes in the demo/choice_sparse.R and demo/choice_dense.R, so the algorithms start closer to the optimal values.
 
@@ -76,7 +74,7 @@ VERSION 0.8.2 (November 4, 2013)
 -  Updated maintainer contact information.
 
 
-VERSION 0.8.1 (June 7, 2013)
+# trustOptim 0.8.1
 
 -  Rewrote update_one_step() in CG-base.h so the gradient is not evaluated if we already know that the trust region will contract.  If the trust region contracts, the algorithm does not move, so the gradient does not need to be recomputed. (Thanks to Gregor Reich for contributing a change to the code).
 
@@ -87,7 +85,7 @@ VERSION 0.8.1 (June 7, 2013)
 
 -  New minimum versions for dependencies (Rcpp 0.10.3 and RcppEigen 0.3.1.2.1).
 
-VERSION 0.8.0 (Dec. 27, 2012)
+# trustOptim 0.8.0
 
 -  Removed sparseFD method. Instead, use the sparseHessianFD package for similar funcationality.
 
@@ -100,13 +98,13 @@ VERSION 0.8.0 (Dec. 27, 2012)
 -  Fixed a bug where the function.scale.factor option defaulted to -1 instead of 1. It now defaults to 1.
 
 
-VERSION 0.7.1 (Sept. 27, 2012)
+# trustOptim 0.7.1
 
 -  Added get.fdfh function to return estimate of sparse Hessian when only the structure is known.
 
 -  Added vignette that describes how to use the package, and compares performance to some other optimizers.
 
 
-VERSION 0.7.0
+# trustOptim 0.7.0
 
 -  Initial upload to CRAN.

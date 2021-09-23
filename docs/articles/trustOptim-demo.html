@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,18 +39,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">trustOptim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/braunm/trustOptim/">
+  <a href="https://github.com/braunm/trustOptim/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,11 +88,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using trustOptim for Unconstrained Nonlinear Optimization with Sparse Hessians</h1>
-                        <h4 class="author">Michael Braun</h4>
+                        <h4 data-toc-skip class="author">Michael Braun</h4>
             
-            <h4 class="date">2021-09-21</h4>
+            <h4 data-toc-skip class="date">2021-09-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/braunm/trustOptim/blob/master/vignettes/trustOptim-demo.Rmd"><code>vignettes/trustOptim-demo.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/braunm/trustOptim/blob/master/vignettes/trustOptim-demo.Rmd" class="external-link"><code>vignettes/trustOptim-demo.Rmd</code></a></small>
       <div class="hidden name"><code>trustOptim-demo.Rmd</code></div>
 
     </div>
@@ -106,7 +102,7 @@
 <p>Much of this vignette was originally published as <span class="citation">Braun (2014)</span>. Please cite that article when using this package in your own research. This version of the vignette is abridged with respect to the underlying theory, and the comparison with other methods. It has more of a focus on how to use the package.</p>
 <div id="why-use-trustoptim" class="section level1">
 <h1 class="hasAnchor">
-<a href="#why-use-trustoptim" class="anchor"></a>Why use trustOptim?</h1>
+<a href="#why-use-trustoptim" class="anchor" aria-hidden="true"></a>Why use trustOptim?</h1>
 <p>The need to optimize continuous nonlinear functions occurs frequently in statistics, most notably in maximum likelihood and <em>maximum a posteriori</em> (MAP) estimation. Users of <strong>R</strong> have a choice of dozens of optimization algorithms. The most readily available algorithms are those that are accessed from the <code>optim</code> function in the base <em>R</em> distribution, and from the many contributed packages that are described in the CRAN Task View for <em>Optimization and Mathematical Programming</em> <span class="citation">(Theussel 2013)</span>. Any particular algorithm may be more appropriate for some problems than for others, and having such a large number of alternatives allows the informed <strong>R</strong> user to choose the best tool for the task at hand.</p>
 <p>One limitation of most of these algorithms is that they can be difficult to use when there is a large number of decision variables. Search methods can be inefficient with a massive number of parameters because the search space is large, and they do not exploit information about slope and curvature to speed up the time to convergence. Conjugate gradient and quasi-Newton methods trace the curvature of the function by using successive gradients to approximate the inverse Hessian. However, if the algorithm stores the entire dense inverse Hessian, its use is resource-intensive when the number of parameters is large. For example, the Hessian for a 50,000 parameter model requires 20GB of RAM to store it as a standard, dense base <strong>R</strong> matrix.</p>
 <p>The <em>trustOptim</em> package provides a trust region algorithm that is optimized for problems for which the Hessian is sparse. Sparse Hessians occur when a large number of the cross-partial derivatives of the objective function are zero. For example, suppose we want to find the mode of a log posterior density for a Bayesian hierarchical model. If we assume that individual-level parameter vectors <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\beta_j\)</span> are conditionally independent, the cross-partial derivatives between all elements of <span class="math inline">\(\beta_i\)</span> and <span class="math inline">\(\beta_j\)</span> are zero. If the model includes a large number of heterogeneous units, and a relatively small number of population-level parameters, the proportion of non-zero entries in the Hessian will be small. Since we know up front which elements of the Hessian are non-zero, we need to compute, store, and operate on only those non-zero elements. By storing sparse Hessians in a compressed format, and using a library of numerical algorithms that are efficient for sparse matrices, we can run the optimization algorithms faster, with a smaller memory footprint, than algorithms that operate on dense Hessians.</p>
@@ -114,7 +110,7 @@
 </div>
 <div id="example-function" class="section level1">
 <h1 class="hasAnchor">
-<a href="#example-function" class="anchor"></a>Example function</h1>
+<a href="#example-function" class="anchor" aria-hidden="true"></a>Example function</h1>
 <p>Before going into the details of how to use the package, let’s consider the following example of an objective function with a sparse Hessian. Suppose we have a dataset of <span class="math inline">\(N\)</span> households, each with <span class="math inline">\(T\)</span> opportunities to purchase a particular product. Let <span class="math inline">\(y_i\)</span> be the number of times household <span class="math inline">\(i\)</span> purchases the product, out of the <span class="math inline">\(T\)</span> purchase opportunities. Furthermore, let <span class="math inline">\(p_i\)</span> be the probability of purchase; <span class="math inline">\(p_i\)</span> is the same for all <span class="math inline">\(T\)</span> opportunities, so we can treat <span class="math inline">\(y_i\)</span> as a binomial random variable. The purchase probability <span class="math inline">\(p_i\)</span> is heterogeneous, and depends on both <span class="math inline">\(k\)</span> continuous covariates <span class="math inline">\(x_i\)</span>, and a heterogeneous coefficient vector <span class="math inline">\(\beta_i\)</span>, such that <span class="math display">\[
   p_i=\frac{\exp(x_i'\beta_i)}{1+\exp(x_i'\beta_i)},~i=1 ... N
 \]</span></p>
@@ -149,24 +145,24 @@
 </div>
 <div id="using-the-package" class="section level1">
 <h1 class="hasAnchor">
-<a href="#using-the-package" class="anchor"></a>Using the package</h1>
-<p>The functions for computing the objective function, gradient and Hessian for this example are in the R/binary.R file. The package also includes a sample dataset with simulated data from the binary choice example. This dataset can be access with the <code><a href="https://rdrr.io/r/utils/data.html">data(binary)</a></code> call.</p>
+<a href="#using-the-package" class="anchor" aria-hidden="true"></a>Using the package</h1>
+<p>The functions for computing the objective function, gradient and Hessian for this example are in the R/binary.R file. The package also includes a sample dataset with simulated data from the binary choice example. This dataset can be access with the <code>data(binary)</code> call.</p>
 <p>To start, we load the data, set some dimension parameters, set prior values for <span class="math inline">\(\Sigma^{-1}\)</span> and <span class="math inline">\(\Omega^{-1}\)</span>, and simulate a vector of variables at which to evaluate the function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">binary</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">binary</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">binary</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">binary</span><span class="op">)</span></code></pre></div>
 <pre><code># List of 3
 #  $ Y: int [1:200] 16 1 30 70 51 52 0 27 59 15 ...
 #  $ X: num [1:2, 1:200] 1.5587 0.0705 0.1293 1.7151 0.4609 ...
 #  $ T: num 100</code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span>
-<span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
-<span class="va">nvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">N</span><span class="op">*</span><span class="va">k</span> <span class="op">+</span> <span class="va">k</span><span class="op">)</span>
-<span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nvars</span><span class="op">)</span> <span class="co">## random starting values</span>
-<span class="va">priors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>inv.Sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/rWishart.html">rWishart</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">k</span><span class="op">+</span><span class="fl">5</span>,<span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span>,
-               inv.Omega <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span>
+<span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">X</span><span class="op">)</span>
+<span class="va">nvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">N</span><span class="op">*</span><span class="va">k</span> <span class="op">+</span> <span class="va">k</span><span class="op">)</span>
+<span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nvars</span><span class="op">)</span> <span class="co">## random starting values</span>
+<span class="va">priors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inv.Sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/rWishart.html" class="external-link">rWishart</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">k</span><span class="op">+</span><span class="fl">5</span>,<span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span>,
+               inv.Omega <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">k</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>This dataset represents the simulated choices for <span class="math inline">\(N= 200\)</span> customers over <span class="math inline">\(T= 100\)</span> purchase opportunties, where the probability of purchase is influenced by <span class="math inline">\(k= 2\)</span> covariates.</p>
 <p>The objective function for the binary choice example is <code>binary.f</code>, the gradient function is <code>binary.grad</code>, and the Hessian function is <code>binary.hess</code>. The first argument to both is the variable vector, and the argument lists must be the same for both. For this example, we need to provide the data list “binary” (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> and <span class="math inline">\(T\)</span>) and the prior parameter list (<span class="math inline">\(\Sigma^{-1}\)</span> and <span class="math inline">\(\Omega^{-1}\)</span>). The <code>binary.hess</code> function returns the Hessian as a <code>dgCMatrix</code> object, which is a compressed sparse matrix class defined in the Matrix package.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -174,7 +170,7 @@
                    gr <span class="op">=</span> <span class="va">binary.grad</span>,
                    hs <span class="op">=</span> <span class="va">binary.hess</span>,
                    method <span class="op">=</span> <span class="st">"Sparse"</span>,
-                   control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+                   control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
                        start.trust.radius<span class="op">=</span><span class="fl">5</span>,
                        stop.trust.radius <span class="op">=</span> <span class="fl">1e-7</span>,
                        prec<span class="op">=</span><span class="fl">1e-7</span>,
@@ -206,16 +202,16 @@
 #  13   11303.8      0.0                    Success</code></pre>
 <div id="control-parameters" class="section level2">
 <h2 class="hasAnchor">
-<a href="#control-parameters" class="anchor"></a>Control parameters</h2>
+<a href="#control-parameters" class="anchor" aria-hidden="true"></a>Control parameters</h2>
 <p>The <code>control</code> argument takes a list of options, all of which are described in the package manual. Most of these arguments are related to the internal workings of the trust region algorithm, such as how close a step needs to be to the border of the trust region before the region expands. However, there are a few arguments that deserve some special attention.</p>
 <div id="scaling-the-objective-function" class="section level3">
 <h3 class="hasAnchor">
-<a href="#scaling-the-objective-function" class="anchor"></a>Scaling the objective function</h3>
+<a href="#scaling-the-objective-function" class="anchor" aria-hidden="true"></a>Scaling the objective function</h3>
 <p>The algorithms in the package <em>minimize</em> the objective function by default. When the <code>function.scale.factor</code> option is specified, the objective function, gradient and Hessian are all multiplied by that value throughout the optimization procedure. If <code>function.scale.factor=-1</code>, then then <code>trust.optim</code> will maximize the objective function.</p>
 </div>
 <div id="stopping-criteria" class="section level3">
 <h3 class="hasAnchor">
-<a href="#stopping-criteria" class="anchor"></a>Stopping criteria</h3>
+<a href="#stopping-criteria" class="anchor" aria-hidden="true"></a>Stopping criteria</h3>
 <p>The <code>trust.optim</code> function will stop when the Euclidean norm of the gradient is less that <code>sqrt(nvars) * prec</code>, where <code>nvars</code> is the length of the parameter vector, and <code>prec</code> is specified in the control list (the default is <code>sqrt(.Machine\$double.eps)</code>, which is the square root of the computer’s floating point precision. However, sometimes the algorithm cannot get the gradient to be that flat. When that occurs, the trust region will shrink, until its radius is less than the value of the <code>stop.trust.radius</code> parameter. The algorithm will then stop with the message “Radius of trust region is less than <code>stop.trust.radius</code>.” This event is not necessarily a problem if the norm of the gradient is still small enough that the gradient is flat for all practical purposes. For example, suppose we set <code>prec</code> to be <span class="math inline">\(10^{-7}\)</span> and that, for numerical reasons, the norm of the gradient simply cannot get below <span class="math inline">\(10^{-6}\)</span>. If the norm of the gradient were the only stopping criterion, the algorithm would continue to run, even though it is probably close enough to the local optimum. With this alternative stopping criterion, the algorithm will also stop when it is clear that the algorithm can no longer take a step that leads to an improvement in the objective function.</p>
 <p>There is, of course, a third stopping criterion. The <code>maxit</code> argument is the maximum number of iterations the algorithm should run before stopping. However, keep in mind that if the algorithm stops at <code>maxit</code>, it is almost certainly not at a local optimum.</p>
 <blockquote>
@@ -227,13 +223,13 @@
 </div>
 <div id="preconditioners" class="section level2">
 <h2 class="hasAnchor">
-<a href="#preconditioners" class="anchor"></a>Preconditioners</h2>
+<a href="#preconditioners" class="anchor" aria-hidden="true"></a>Preconditioners</h2>
 <p>Currently, the package offers two preconditioners: an identity preconditioner (no preconditioning), and an inexact modified Cholesky preconditioner, as in Algorithm 7.3 of <span class="citation">Nocedal and Wright (2006)</span>. The identity and diagonal preconditioners are available for all of the methods. For the <em>Sparse</em> method, the modified Cholesky preconditioner will use a positive definite matrix that is close to the potentially indefinite Hessian (<code>trust.optim</code> does <em>not</em> require that the objective function be positive definite). For <em>BFGS</em>, the modified Cholesky preconditioner is available because <em>BFGS</em> updates are always positive definite. If the user selects a modified Cholesky preconditioner for <em>SR1</em>, the algorithm will use the identity preconditioner instead.</p>
 <p>There is no general rule for selecting preconditioners. There will be a tradeoff between the number of iterations needs to solve the problem and the time it takes to compute any particular preconditioner. In some cases, the identity preconditioner may even solve the problem in fewer iterations than a modified Cholesky preconditioner.</p>
 </div>
 <div id="result-object" class="section level2">
 <h2 class="hasAnchor">
-<a href="#result-object" class="anchor"></a>Result object</h2>
+<a href="#result-object" class="anchor" aria-hidden="true"></a>Result object</h2>
 <p>The call ot <code>trust.optim</code> returns a list of values.</p>
 <ul>
 <li>
@@ -262,11 +258,11 @@
 </div>
 <div id="algorithmic-details" class="section level1">
 <h1 class="hasAnchor">
-<a href="#algorithmic-details" class="anchor"></a>Algorithmic details</h1>
+<a href="#algorithmic-details" class="anchor" aria-hidden="true"></a>Algorithmic details</h1>
 <p>Consider <span class="math inline">\(f(x)\)</span>, an objective function over a <span class="math inline">\(P\)</span>-dimensional vector that we want to minimize. Let <span class="math inline">\(g\)</span> be the gradient, and let <span class="math inline">\(B\)</span> be the Hessian. The goal is to find a local minimum of <span class="math inline">\(f(x)\)</span>, with no constraints on <span class="math inline">\(x\)</span>, within some window of numerical precision (i.e., where <span class="math inline">\(\|g\|_2 / \sqrt{p}&lt;\epsilon\)</span> for small <span class="math inline">\(\epsilon&gt;0\)</span>). We will assume that <span class="math inline">\(B\)</span> is positive definite at the local optimum, but not necessarily at other values of <span class="math inline">\(x\)</span>. Iterations are indexed by <span class="math inline">\(t\)</span>.</p>
 <div id="trust-region-methods-for-nonlinear-optimization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#trust-region-methods-for-nonlinear-optimization" class="anchor"></a>Trust region methods for nonlinear optimization</h2>
+<a href="#trust-region-methods-for-nonlinear-optimization" class="anchor" aria-hidden="true"></a>Trust region methods for nonlinear optimization</h2>
 <p>The details of trust region methods are described in both <span class="citation">Nocedal and Wright (2006)</span> and <span class="citation">Conn, Gould, and Toint (2000)</span>, and the following exposition borrows heavily from both sources. At each iteration of a trust region algorithm, we construct a quadratic approximation to the objective function at <span class="math inline">\(x_t\)</span>, and minimize that approximation, subject to a constraint that the solution falls within a trust region with radius <span class="math inline">\(d_t\)</span>. More formally, each iteration of the trust region algorithm involves solving the “trust region subproblem,” or TRS.</p>
 <p><span class="math display">\[
 \begin{align}
@@ -286,10 +282,10 @@ s_t&amp;=\arg\min_{s\in R^p} f^*(s) \qquad\text{s.t. }\|s\|_M\leq d_t
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-R_trustOptim" class="csl-entry">
-Braun, Michael. 2014. <span>“<span class="nocase">t</span>rust<span>O</span>ptim: An <span>R</span> Package for Trust Region Optimization with Sparse Hessians.”</span> <em>Journal of Statistical Software</em> 60 (4): 1–16. <a href="http://www.jstatsoft.org/v60/i04/">http://www.jstatsoft.org/v60/i04/</a>.
+Braun, Michael. 2014. <span>“<span class="nocase">t</span>rust<span>O</span>ptim: An <span>R</span> Package for Trust Region Optimization with Sparse Hessians.”</span> <em>Journal of Statistical Software</em> 60 (4): 1–16. <a href="https://www.jstatsoft.org/v60/i04/" class="external-link">https://www.jstatsoft.org/v60/i04/</a>.
 </div>
 <div id="ref-ConnGould2000" class="csl-entry">
 Conn, Andrew R, Nicholas I M Gould, and Philippe L Toint. 2000. <em>Trust-Region Methods</em>. Philadelphia: SIAM-MPS.
@@ -298,10 +294,10 @@ Conn, Andrew R, Nicholas I M Gould, and Philippe L Toint. 2000. <em>Trust-Region
 Nocedal, Jorge, and Stephen J Wright. 2006. <em>Numerical Optimization</em>. Second edition. Springer-Verlag.
 </div>
 <div id="ref-Steihaug1983" class="csl-entry">
-Steihaug, Trond. 1983. <span>“The Conjugate Gradient Method and Trust Regions in Large Scale Optimization.”</span> <em><span>SIAM</span> Journal on Numerical Analysis</em> 20 (3): 626–37. <a href="https://doi.org/10.1137/0720042">https://doi.org/10.1137/0720042</a>.
+Steihaug, Trond. 1983. <span>“The Conjugate Gradient Method and Trust Regions in Large Scale Optimization.”</span> <em><span>SIAM</span> Journal on Numerical Analysis</em> 20 (3): 626–37. <a href="https://doi.org/10.1137/0720042" class="external-link">https://doi.org/10.1137/0720042</a>.
 </div>
 <div id="ref-R_OptimTaskView" class="csl-entry">
-Theussel, Stefan. 2013. <span>“<span>CRAN</span> Task View: Optimization and Mathematical Programming.”</span> 2013. <a href="https://cran.r-project.org/view=Optimization">https://cran.r-project.org/view=Optimization</a>.
+Theussel, Stefan. 2013. <span>“<span>CRAN</span> Task View: Optimization and Mathematical Programming.”</span> 2013. <a href="https://cran.r-project.org/view=Optimization" class="external-link">https://cran.r-project.org/view=Optimization</a>.
 </div>
 </div>
 </div>
@@ -318,11 +314,13 @@ Theussel, Stefan. 2013. <span>“<span>CRAN</span> Task View: Optimization and M
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://braunm.github.io">Michael Braun</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://braunm.github.io" class="external-link external-link">Michael Braun</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -330,6 +328,8 @@ Theussel, Stefan. 2013. <span>“<span>CRAN</span> Task View: Optimization and M
 
   
 
+
+  
 
   </body>
 </html>

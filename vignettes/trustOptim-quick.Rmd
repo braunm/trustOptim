@@ -12,7 +12,7 @@ vignette: >
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#", message=FALSE)
-options(digits=4, scipen=0)			       
+options(digits=4, scipen=0)
 ```
 
 This is a quick demo of how to use the *trustOptim* package.  For this
@@ -27,7 +27,7 @@ x_2, y_2, ... x_n, y_n$. The optimum of the function is a vector of
 ones, and the value at the minimum is zero.
 
 The following functions return the objective, gradient, and Hessian
-(in sparse format) of this function.  
+(in sparse format) of this function.
 
 ```{r}
 require(trustOptim)
@@ -65,7 +65,7 @@ hess <- function(V) {
                     k=c(-1,0,1),
                     diagonals=list(d1,d0,d1),
                     symmetric=FALSE,
-                    giveCsparse=TRUE)
+                    repr='C')
     return(drop0(H))
 }
 ```

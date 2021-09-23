@@ -36,7 +36,7 @@ test_that("Rosenbrock", {
                         k=c(-1,0,1),
                         diagonals=list(d1,d0,d1),
                         symmetric=FALSE,
-                        giveCsparse=TRUE)
+                        repr="C")
         return(drop0(H))
     }
 
@@ -70,6 +70,3 @@ test_that("Rosenbrock", {
         expect_match(opt0$method, meth$method)
     }
 })
-
-
-

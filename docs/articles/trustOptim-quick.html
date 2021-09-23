@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,18 +39,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">trustOptim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/braunm/trustOptim/">
+  <a href="https://github.com/braunm/trustOptim/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,11 +88,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>A Quick Demo of trustOptim</h1>
-                        <h4 class="author">Michael Braun</h4>
+                        <h4 data-toc-skip class="author">Michael Braun</h4>
             
-            <h4 class="date">2021-09-21</h4>
+            <h4 data-toc-skip class="date">2021-09-23</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/braunm/trustOptim/blob/master/vignettes/trustOptim-quick.Rmd"><code>vignettes/trustOptim-quick.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/braunm/trustOptim/blob/master/vignettes/trustOptim-quick.Rmd" class="external-link"><code>vignettes/trustOptim-quick.Rmd</code></a></small>
       <div class="hidden name"><code>trustOptim-quick.Rmd</code></div>
 
     </div>
@@ -110,49 +106,49 @@
 <p>The parameter vector contains <span class="math inline">\(2N\)</span> variables ordered as <span class="math inline">\(x_1, y_1, x_2, y_2, ... x_n, y_n\)</span>. The optimum of the function is a vector of ones, and the value at the minimum is zero.</p>
 <p>The following functions return the objective, gradient, and Hessian (in sparse format) of this function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/braunm/trustOptim">trustOptim</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="http://Matrix.R-forge.R-project.org/">Matrix</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://braunm.github.io/trustOptim/">trustOptim</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://Matrix.R-forge.R-project.org/" class="external-link">Matrix</a></span><span class="op">)</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">V</span><span class="op">)</span> <span class="op">{</span>
 
-    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
-    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fl">100</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
+    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">100</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">-</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">+</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">V</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
-    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
+    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
 
     <span class="va">t</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">-</span><span class="va">y</span>
     <span class="va">dxi</span> <span class="op">&lt;-</span> <span class="fl">400</span><span class="op">*</span><span class="va">t</span><span class="op">*</span><span class="va">x</span><span class="op">+</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>
     <span class="va">dyi</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">200</span><span class="op">*</span><span class="va">t</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">dxi</span>,<span class="va">dyi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">dxi</span>,<span class="va">dyi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
  <span class="op">}</span>
 
 <span class="va">hess</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">V</span><span class="op">)</span> <span class="op">{</span>
 
-    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
-    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-    <span class="va">d0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">200</span>,<span class="va">N</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>
-    <span class="va">d0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1200</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">-</span><span class="fl">400</span><span class="op">*</span><span class="va">y</span><span class="op">+</span><span class="fl">2</span>
-    <span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>
-    <span class="va">d1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">400</span><span class="op">*</span><span class="va">x</span>
+    <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
+    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">V</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">d0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">200</span>,<span class="va">N</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>
+    <span class="va">d0</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1200</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">-</span><span class="fl">400</span><span class="op">*</span><span class="va">y</span><span class="op">+</span><span class="fl">2</span>
+    <span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>
+    <span class="va">d1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,by<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">400</span><span class="op">*</span><span class="va">x</span>
 
-    <span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/bandSparse.html">bandSparse</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span>,
-                    k<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,
-                    diagonals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">d1</span>,<span class="va">d0</span>,<span class="va">d1</span><span class="op">)</span>,
+    <span class="va">H</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/bandSparse.html" class="external-link">bandSparse</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span>,
+                    k<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,
+                    diagonals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">d1</span>,<span class="va">d0</span>,<span class="va">d1</span><span class="op">)</span>,
                     symmetric<span class="op">=</span><span class="cn">FALSE</span>,
-                    giveCsparse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/drop0.html">drop0</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span><span class="op">)</span>
+                    repr<span class="op">=</span><span class="st">'C'</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/drop0.html" class="external-link">drop0</a></span><span class="op">(</span><span class="va">H</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>For this demo, we start at a random vector.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
 <span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">N</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Next, we call <code>trust.optim</code>, with all default arguments.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, hs<span class="op">=</span><span class="va">hess</span>, method<span class="op">=</span><span class="st">"Sparse"</span><span class="op">)</span>
@@ -251,7 +247,7 @@
 <p>One way to <em>potentially</em> speed up convergence (but not necessarily compute time) is to apply a preconditioner to the algorithm. Other than the identity matrix (the default), the package current supports only a modified Cholesky preconditioner. This is implemented with a control parameter <code>preconditioner=1</code>. To save space, we report the optimizer status only ever 10 iterations.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">opt1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, hs<span class="op">=</span><span class="va">hess</span>, method<span class="op">=</span><span class="st">"Sparse"</span>,
-      control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>preconditioner<span class="op">=</span><span class="fl">1</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+      control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>preconditioner<span class="op">=</span><span class="fl">1</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Beginning optimization</span>
 <span class="co"># </span>
 <span class="co"># iter            f           nrm_gr                     status</span>
@@ -267,7 +263,7 @@
 <p>##Quasi-Newton Methods</p>
 <p>The <code>trust.optim</code> function also supports quasi-Newton approximations to the Hessian. The two options are BFGS and SR1 updates. See <span class="citation">Nocedal and Wright (2006)</span> for details. You do not need to provide the Hessian for these methods, and they are often preferred when the Hessian is dense. However, they may take longer to converge, which is why we need to change the <code>maxit</code> control parameter. To save space, we report the status of the optimizer only every 10 iterations.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">opt.bfgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, method<span class="op">=</span><span class="st">"BFGS"</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>maxit<span class="op">=</span><span class="fl">5000</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">opt.bfgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, method<span class="op">=</span><span class="st">"BFGS"</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>maxit<span class="op">=</span><span class="fl">5000</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Beginning optimization</span>
 <span class="co"># </span>
 <span class="co"># iter            f           nrm_gr                     status</span>
@@ -310,7 +306,7 @@
 <span class="co"># [1] 2</span></code></pre></div>
 <p>And we can do the same thing with SR1 updates.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">opt.sr1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, method<span class="op">=</span><span class="st">"SR1"</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>maxit<span class="op">=</span><span class="fl">5000</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">opt.sr1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trust.optim.html">trust.optim</a></span><span class="op">(</span><span class="va">start</span>, fn<span class="op">=</span><span class="va">f</span>, gr<span class="op">=</span><span class="va">df</span>, method<span class="op">=</span><span class="st">"SR1"</span>, control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>maxit<span class="op">=</span><span class="fl">5000</span>, report.freq<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># Beginning optimization</span>
 <span class="co"># </span>
 <span class="co"># iter            f           nrm_gr                     status</span>
@@ -358,7 +354,7 @@
 <p>Note that the quasi_Newton updates do not return a Hessian. We do not think that the final approximations from BFGS or SR1 updates are particularly reliable. If you need the Hessian, you can use the <em>sparseHessianFD</em> package.</p>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-NocedalWright2006" class="csl-entry">
 Nocedal, Jorge, and Stephen J Wright. 2006. <em>Numerical Optimization</em>. Second edition. Springer-Verlag.
@@ -378,11 +374,13 @@ Nocedal, Jorge, and Stephen J Wright. 2006. <em>Numerical Optimization</em>. Sec
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://braunm.github.io">Michael Braun</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://braunm.github.io" class="external-link external-link">Michael Braun</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -390,6 +388,8 @@ Nocedal, Jorge, and Stephen J Wright. 2006. <em>Numerical Optimization</em>. Sec
 
   
 
+
+  
 
   </body>
 </html>

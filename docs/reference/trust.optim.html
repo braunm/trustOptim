@@ -46,6 +46,8 @@ gradient search directions and quasi-Hessian updates." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -67,9 +69,15 @@ gradient search directions and quasi-Hessian updates." />
 </script>
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,19 +91,13 @@ gradient search directions and quasi-Hessian updates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">trustOptim</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -147,7 +149,7 @@ gradient search directions and quasi-Hessian updates." />
 gradient search directions and quasi-Hessian updates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>trust.optim</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>trust.optim</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>fn</span>,
   <span class='va'>gr</span>,
@@ -155,7 +157,7 @@ gradient search directions and quasi-Hessian updates.</p>
   method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"SR1"</span>, <span class='st'>"BFGS"</span>, <span class='st'>"Sparse"</span><span class='op'>)</span>,
   control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,15 +203,35 @@ All arguments must be named.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>List containing the following items:</p>
+<dl>
 <dt>fval</dt><dd><p>Value of the objective function</p></dd>
-  <dt>solution</dt><dd><p>Parameter vector at the optimum</p></dd>
-  <dt>gradient</dt><dd><p>Gradient at the optimum</p></dd>
-  <dt>hessian</dt><dd><p>Estimate of the Hessian at the optimum (as class
+</dl>
+<p></p>
+<dl>
+<dt>solution</dt><dd><p>Parameter vector at the optimum</p></dd>
+</dl>
+<p></p>
+<dl>
+<dt>gradient</dt><dd><p>Gradient at the optimum</p></dd>
+</dl>
+<p></p>
+<dl>
+<dt>hessian</dt><dd><p>Estimate of the Hessian at the optimum (as class
     <code>symmetricMatrix</code>, returned only for <code>Sparse</code> method).</p></dd>
-  <dt>iterations</dt><dd><p>Number of iterations before stopping</p></dd>
-  <dt>status</dt><dd><p>A message describing the last state of the iterator</p></dd>
-  <dt>nnz</dt><dd><p>For the Sparse method only, the number of nonzero elements in the lower triangle of the Hessian</p></dd>.
-
+</dl>
+<p></p>
+<dl>
+<dt>iterations</dt><dd><p>Number of iterations before stopping</p></dd>
+</dl>
+<p></p>
+<dl>
+<dt>status</dt><dd><p>A message describing the last state of the iterator</p></dd>
+</dl>
+<p></p>
+<dl>
+<dt>nnz</dt><dd><p>For the Sparse method only, the number of nonzero elements in the lower triangle of the Hessian</p></dd>
+</dl>
+<p>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -291,25 +313,25 @@ identity matrix (default), For the <code>Sparse</code> method, 1 is a modified C
 <p>Of course, <span class="pkg">sparseHessianFD</span> is useful only for the <code>Sparse</code> method.  That said, one may still get decent performance using these routines even if the Hessian is sparse, if the problem is not too large.  Just treat the Hessian as if it were sparse.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>)</span>
-<span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span>
-<span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>$</span><span class='va'>X</span><span class='op'>)</span>
-<span class='va'>start</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='op'>(</span><span class='va'>N</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>*</span><span class='va'>k</span><span class='op'>)</span>
-<span class='va'>priors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>inv.Sigma <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span>, inv.Omega <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'>trust.optim</span><span class='op'>(</span><span class='va'>start</span>, fn<span class='op'>=</span><span class='va'>binary.f</span>,
-                  gr <span class='op'>=</span> <span class='va'>binary.grad</span>,
-                  hs <span class='op'>=</span> <span class='va'>binary.hess</span>,
-                  method <span class='op'>=</span> <span class='st'>"Sparse"</span>,
-                  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-                      report.precision<span class='op'>=</span><span class='fl'>1L</span>,
-                      function.scale.factor<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span>
-                  <span class='op'>)</span>,
-                  data<span class='op'>=</span><span class='va'>binary</span>, priors<span class='op'>=</span><span class='va'>priors</span>
-                  <span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>k</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span><span class='op'>(</span><span class='va'>binary</span><span class='op'>$</span><span class='va'>X</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>start</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='op'>(</span><span class='va'>N</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>*</span><span class='va'>k</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>priors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>inv.Sigma <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span>, inv.Omega <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>opt</span> <span class='op'>&lt;-</span> <span class='fu'>trust.optim</span><span class='op'>(</span><span class='va'>start</span>, fn<span class='op'>=</span><span class='va'>binary.f</span>,</span>
+<span class='r-in'>                  gr <span class='op'>=</span> <span class='va'>binary.grad</span>,</span>
+<span class='r-in'>                  hs <span class='op'>=</span> <span class='va'>binary.hess</span>,</span>
+<span class='r-in'>                  method <span class='op'>=</span> <span class='st'>"Sparse"</span>,</span>
+<span class='r-in'>                  control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>                      report.precision<span class='op'>=</span><span class='fl'>1L</span>,</span>
+<span class='r-in'>                      function.scale.factor<span class='op'>=</span><span class='op'>-</span><span class='fl'>1</span></span>
+<span class='r-in'>                  <span class='op'>)</span>,</span>
+<span class='r-in'>                  data<span class='op'>=</span><span class='va'>binary</span>, priors<span class='op'>=</span><span class='va'>priors</span></span>
+<span class='r-in'>                  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -321,11 +343,11 @@ identity matrix (default), For the <code>Sparse</code> method, 1 is a modified C
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://braunm.github.io'>Michael Braun</a>.</p>
+  <p><p>Developed by <a href="https://braunm.github.io" class="external-link">Michael Braun</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -333,6 +355,8 @@ identity matrix (default), For the <code>Sparse</code> method, 1 is a modified C
 
   
 
+
+  
 
   </body>
 </html>

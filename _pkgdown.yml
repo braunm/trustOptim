@@ -13,7 +13,7 @@ reference:
   - title: Package overview
     desc:  Overview of trustOptim
     contents:
-      - trustOptim-package
+      - trustOptim
   - title: "Running the optimizer"
   - contents:
       - trust.optim
@@ -23,3 +23,5 @@ reference:
       - starts_with("binary")
 links:
   - text:  Browse at source code
+news:
+  one_page: true
