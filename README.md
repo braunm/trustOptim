@@ -1,13 +1,3 @@
----
-title:  The trustOptim package
-output:
-  md_document:
-    variant: gfm
----
-
-
-
-
 # The trustOptim package
 
 [trustOptim](https://braunm.github.io/trustOptim/) is an R package for unconstrained optimization of nonlinear
