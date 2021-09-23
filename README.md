@@ -1,8 +1,6 @@
 ---
 title:  The trustOptim package
-output:
-  md_document:
-    variant: gfm
+output: github_document
 ---
 
 
