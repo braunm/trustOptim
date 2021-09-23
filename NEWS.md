@@ -4,6 +4,7 @@
 - Built a pkgdown site.
 - Changes to various urls and links.
 - New API for Matrix 1.3: replaced deprecated giveCsparse arguments with repr.
+- Relaxed numerical precision requirements in tests/testthat/test_rosenbrock.R, so the package passes CRAN checks on 32-bit Solaris.
 
 # trustOptim 0.8.7
 

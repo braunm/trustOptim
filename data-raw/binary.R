@@ -24,6 +24,4 @@ Y <- sapply(log.p, function(q) return(rbinom(1,T,exp(q))))
 
 binary <- list(Y=Y, X=X, T=T)
 
-devtools::use_data(binary, overwrite=TRUE)
- 
-
+usethis::use_data(binary, overwrite=TRUE)

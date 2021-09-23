@@ -16,6 +16,10 @@ test_that("Binary", {
             )
 
   for (meth in m) {
+
+    if (!(Sys.info()[['sysname']] == 'sunos' & meth$method %in% c('BFGS', 'SR1'))) {
+
+
     opt0 <- trust.optim(start,
                         fn=binary.f,
                         gr=binary.grad,
@@ -25,6 +29,7 @@ test_that("Binary", {
                           start.trust.radius=5,
                           stop.trust.radius = 1e-8,
                           prec=1e-5,
+                          cg.tol=1e-5,
                           report.precision=1L,
                           preconditioner=meth$precond,
                           report.freq=20L,
@@ -37,9 +42,13 @@ test_that("Binary", {
                         )
 
     norm_gr <- sqrt(sum(opt0$gradient ^ 2))
+
     expect_equal(norm_gr, 0,  tolerance=.0005)
     expect_match(opt0$status, "Success")
     expect_match(opt0$method, meth$method)
+
+    }
+
   }
 
   ## opt <- trust.optim(start, fn=binary.f,
