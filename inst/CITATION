@@ -8,11 +8,11 @@ citEntry(entry = "Article",
   volume       = "60",
   number       = "4",
   pages        = "1--16",
-  url          = "https://www.jstatsoft.org/v60/i04/",
+  url          = "https://doi.org/10.18637/jss.v060.i04",
 
   textVersion  =
   paste("Michael Braun (2014).",
         "trustOptim: An R Package for Trust Region Optimization with Sparse Hessians.",
         "Journal of Statistical Software, 60(4), 1-16.",
-        "URL http://www.jstatsoft.org/v60/i04/.")
+        "URL https://doi.org/10.18637/jss.v060.i04.")
 )

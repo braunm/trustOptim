@@ -1,7 +1,7 @@
 context("Tests using binary dataset")
 
 test_that("Binary", {
-  skip_on_cran()
+  testthat::skip_on_cran()
   data(binary)
   N <- length(binary$Y)
   k <- NROW(binary$X)

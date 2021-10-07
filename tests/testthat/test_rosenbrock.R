@@ -1,7 +1,7 @@
 context("Tests using Rosenbrock function")
 
 test_that("Rosenbrock", {
-
+  testthat::skip_on_cran()
     f.rosen <- function(V) {
 
         N <- length(V)/2
