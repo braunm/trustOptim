@@ -1,3 +1,10 @@
+trustOptim 0.8.7.3
+
+- Disabled tests on CRAN.  Checks depending on numerical precision are not 100% guaranteed to pass on all CRAN platforms.
+- Updated CITATION file to point to the DOI link to JStatSoft article.
+
+
+
 trustOptim 0.8.7.2
 
 -   Built a pkgdown site.
