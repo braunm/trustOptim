@@ -1,6 +1,7 @@
 context("Tests using binary dataset")
 
 test_that("Binary", {
+  skip_on_cran()
   data(binary)
   N <- length(binary$Y)
   k <- NROW(binary$X)
@@ -43,7 +44,7 @@ test_that("Binary", {
 
     norm_gr <- sqrt(sum(opt0$gradient ^ 2))
 
-    expect_equal(norm_gr, 0,  tolerance=.0005)
+    expect_equal(norm_gr, 0,  tolerance=.001)
     expect_match(opt0$status, "Success")
     expect_match(opt0$method, meth$method)
 
