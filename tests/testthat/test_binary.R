@@ -28,7 +28,7 @@ test_that("Binary", {
                         method=meth$method,
                         control=list(
                           start.trust.radius=5,
-                          stop.trust.radius = 1e-8,
+                          stop.trust.radius = 1e-9,
                           prec=1e-5,
                           cg.tol=1e-5,
                           report.precision=1L,

@@ -147,7 +147,7 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
   if(method=="Sparse") {
     hs1 <- if (!is.null(hs)) function(x) hs(x,...)
     r1 <- hs1(x)
-    if (class(r1)!="dgCMatrix") stop("Error in trust.optim:  hs function must return object of class dgCMatrix")
+    if (!inherits(r1, "dgCMatrix")) stop("Error in trust.optim:  hs function must return object of class dgCMatrix")
   }
 
     ## Defaults :
@@ -269,4 +269,3 @@ trust.optim <- function(x, fn, gr, hs=NULL, method=c("SR1","BFGS","Sparse"), con
 
   return(res)
 }
-
