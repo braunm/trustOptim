@@ -24,4 +24,4 @@ LinkingTo: Rcpp, RcppEigen (>= 0.3.3.7.0)
 Copyright: (c) 2015-2021 Michael Braun
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3

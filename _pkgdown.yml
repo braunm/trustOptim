@@ -1,6 +1,7 @@
 url: https://braunm.github.io/trustOptim
 
 template:
+  bootstrap: 5
   params:
     bootswatch: spacelab
     ganalytics: G-XVJF7FJCCT

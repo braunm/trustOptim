@@ -1,3 +1,6 @@
+#' @keywords internal
+"_PACKAGE"
+
 #' @title Trust-region optimization
 #'
 #' @description Nonlinear optimizers using trust regions, with methods
@@ -18,9 +21,11 @@
 #' Regions in Large Scale Optimization. SIAM Journal on Numerical
 #' Analysis 20(3), 626-637.
 #'
-#' @docType package
 #' @name trustOptim
 #' @import Matrix Rcpp
 #' @importFrom methods as
 #' @useDynLib trustOptim, .registration=TRUE
+
+## usethis namespace: start
+## usethis namespace: end
 NULL

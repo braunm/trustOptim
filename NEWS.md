@@ -1,3 +1,7 @@
+# trustOptim 0.8.7.4
+
+- minor changes to conform to new CRAN guidelines and resolve check notes.
+- updated documentation files to remove deprecated roxygen2 arguments
 
 # trustOptim 0.8.7.3
 
